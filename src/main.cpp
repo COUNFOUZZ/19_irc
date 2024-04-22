@@ -12,6 +12,7 @@ int	main(int argc, char **argv) {
 	}
 
 	signal(SIGINT, shutdown);
+	signal(SIGQUIT, shutdown);
 	signal(SIGTSTP, SIG_IGN);
 	try {
 		Server	server(argv[1], argv[2]);

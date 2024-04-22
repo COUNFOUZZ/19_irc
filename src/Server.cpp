@@ -25,7 +25,7 @@ void	Server::_portAndPasswordHandling(char* port) {
 	ss >> this->_port;
 	if (ss.fail())
 		throw std::runtime_error("stringstream failed !");
-	if (this->_port < 1 && this->_port > 65535)
+	if (this->_port < 1024 && this->_port > 49151)
 		throw std::runtime_error("bad range of port !");
 	if (this->_password.empty())
 		throw std::runtime_error("Password can't be empty !");
@@ -82,6 +82,20 @@ int Server::_acceptClient(void) {
 	return (clientSocket);
 }
 
+std::vector<std::string>	Server::_getCommand(std::string input) {
+	std::vector<std::string>	cmds;
+
+	if (input.empty())
+		return cmds;
+	if (!input.empty() && input[input.size() - 1] == '\r')
+		input.erase(input.size() - 1);
+	std::string			buffer;
+	std::istringstream	ss(input);
+	while (std::getline(ss, buffer, ' '))
+		cmds.push_back(buffer);
+	return cmds;
+}
+
 void	Server::_clientHandling(int socket) {
 	char	buffer[2048] = {0};
 	int		bytesReceived = recv(socket, buffer, sizeof(buffer) - 1, 0);
@@ -92,8 +106,23 @@ void	Server::_clientHandling(int socket) {
 		close(socket);
 	} else {
 		buffer[bytesReceived] = '\0';
-		std::string	msg(buffer);
-		std::cout << msg << std::endl;
+		std::istringstream	ss(buffer);
+		std::string			line;
+
+		while (std::getline(ss, line, '\n')) {
+			if (!line.empty())
+				line.erase(line.length());
+			std::vector<std::string>	commands = this->_getCommand(line);
+			
+			std::vector<std::string>::iterator it, ite;
+			it = commands.begin();
+			ite = commands.end();
+
+			while (it != ite) {
+				std::cout << *it << std::endl;
+				++it;
+			}
+		}
 	}
 }
 
