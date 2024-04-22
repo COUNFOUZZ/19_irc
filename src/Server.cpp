@@ -104,7 +104,7 @@ void	Server::_runServer(void) {
 	while (!g_shutdown) {
 		fd_set	readySockets = this->_masterSet;
 		if (select(fdMax + 1, &readySockets, NULL, NULL, NULL) < 0)
-			throw std::runtime_error("Select !");
+			break;
 		for (int i = 0; i <= fdMax; i++){
 			if (FD_ISSET(i, &readySockets)) {
 				if (i == this->_serverSocket) {
