@@ -1,22 +1,16 @@
 #include "../include/Channel.hpp"
 
 
-Channel::Channel(void)
-{
+Channel::Channel(void) {
 	this->_name = "";
-	return ;
 }
 
-Channel::Channel(std::string name) : _name(name)
-{
-	return ;
-}
+Channel::Channel(std::string name) : _name(name) {}
 
 Channel::~Channel(void) {}
 
 /*** Getters ***/
 
-const std::string	Channel::getName() const
-{
+const std::string	Channel::getName() const {
 	return (this->_name);
 }
