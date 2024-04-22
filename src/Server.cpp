@@ -73,14 +73,28 @@ int Server::_acceptClient(void) {
 	sockaddr_storage	client_addr;
 	socklen_t 			addr_len = sizeof(client_addr);
 
-	int client_socket = accept(this->_serverSocket, (struct sockaddr *)&client_addr, &addr_len);
-	if (client_socket < 0) {
+	int clientSocket = accept(this->_serverSocket, (struct sockaddr *)&client_addr, &addr_len);
+	if (clientSocket < 0)
 		std::cerr << "Can't accept client!" << std::endl;
-	}
-	FD_SET(client_socket, &this->_masterSet);
+	FD_SET(clientSocket, &this->_masterSet);
+	this->_mapSocketAndClients.insert(std::pair<int, Client>(clientSocket, Client(clientSocket)));
+	this->_mapNicknameAndClients.insert(std::pair<std::string, Client>(this->_mapSocketAndClients[clientSocket].getNickname(), this->_mapSocketAndClients[clientSocket]));
+	return (clientSocket);
+}
 
-	// create map client and class Client to add the new client here.
-	return (client_socket);
+void	Server::_clientHandling(int socket) {
+	char	buffer[2048] = {0};
+	int		bytesReceived = recv(socket, buffer, sizeof(buffer) - 1, 0);
+
+	if (bytesReceived <= 0) {
+		FD_CLR(socket, &this->_masterSet);
+		this->_mapSocketAndClients.erase(socket);
+		close(socket);
+	} else {
+		buffer[bytesReceived] = '\0';
+		std::string	msg(buffer);
+		std::cout << msg << std::endl;
+	}
 }
 
 //	tuto select() and FD_SET,...
@@ -98,7 +112,7 @@ void	Server::_runServer(void) {
 					if (fdMax < clientSocket)
 						fdMax = clientSocket;
 				} else {
-					this->_handleClient(i);
+					this->_clientHandling(i);
 				}
 			}
 		}

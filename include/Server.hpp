@@ -20,18 +20,20 @@ class Server {
 	private:
 		Server(void) {}
 
-		int					_port;
-		std::string			_password;
-		int					_serverSocket;
-		struct sockaddr_in	_serverAddress;
-		fd_set				_masterSet;
-		// map client here
+		int								_port;
+		std::string						_password;
+		int								_serverSocket;
+		struct sockaddr_in				_serverAddress;
+		fd_set							_masterSet;
+		std::map<int, Client>			_mapSocketAndClients;
+		std::map<std::string, Client>	_mapNicknameAndClients;
 
 		void	_portAndPasswordHandling(char* port);
 		bool	_arrIsDigit(char* nbr);
 		void	_initServer(void);
 		void	_runServer(void);
 		int		_acceptClient(void);
+		void	_clientHandling(int socket);
 	public:
 		Server(char* port, char* password);
 		~Server(void);

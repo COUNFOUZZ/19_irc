@@ -1,7 +1,17 @@
 #include "../include/Client.hpp"
 
-Client::Client(int socket) : _socket(socket), _nickname(""), _username("") {}
+Client::Client(void) : _socket(-1), _username(""), _nickname("") {}
+Client::Client(int socket) : _socket(socket), _username(""), _nickname("") {}
 Client::~Client(void) {}
+
+Client&	Client::operator=(const Client& dest) {
+	if (this == &dest)
+		return *this;
+	this->_socket = dest._socket;
+	this->_username = dest._username;
+	this->_nickname = dest._nickname;
+	return *this;
+}
 
 /*** Setters ***/
 
