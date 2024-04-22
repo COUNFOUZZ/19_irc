@@ -1,4 +1,5 @@
 #include "../include/Server.hpp"
+#include "../include/Client.hpp"
 
 bool	g_shutdown = false;
 
