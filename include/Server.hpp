@@ -13,6 +13,8 @@
 #include <fcntl.h>		// fcntl()
 #include <cstring>		// memset()
 #include <map>
+#include <vector>
+#include <iterator>
 
 extern bool g_shutdown;
 
@@ -28,12 +30,14 @@ class Server {
 		std::map<int, Client>			_mapSocketAndClients;
 		std::map<std::string, Client>	_mapNicknameAndClients;
 
-		void	_portAndPasswordHandling(char* port);
-		bool	_arrIsDigit(char* nbr);
-		void	_initServer(void);
-		void	_runServer(void);
-		int		_acceptClient(void);
-		void	_clientHandling(int socket);
+		void						_portAndPasswordHandling(char* port);
+		bool						_arrIsDigit(char* nbr);
+		void						_initServer(void);
+		void						_runServer(void);
+		int							_acceptClient(void);
+		void						_clientHandling(int socket);
+		std::vector<std::string>	_getCommand(std::string input);
+		// void						_commandHandling(int socket, std::vector<std::string> commands);
 	public:
 		Server(char* port, char* password);
 		~Server(void);
