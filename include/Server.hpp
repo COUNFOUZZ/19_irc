@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../include/Client.hpp"
 #include <iostream>
 #include <cctype>
 #include <sstream>

@@ -5,12 +5,13 @@
 class Client
 {
 	private:
+		Client(void) {}
+
 		int	_socket;
 		std::string	_username;
 		std::string	_nickname;
 
 	public:
-		Client(void);
 		Client(int socket);
 		~Client(void);
 
