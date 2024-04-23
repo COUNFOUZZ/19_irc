@@ -6,7 +6,8 @@ class Client
 {
 	private:
 
-		int	_socket;
+		int			_socket;
+		bool		_isRegistred;
 		std::string	_username;
 		std::string	_nickname;
 
@@ -22,6 +23,7 @@ class Client
 		void	setNickname(std::string nickname);
 
 	/*** Getters ***/
-		const std::string	getUsername(void);
-		const std::string	getNickname(void);
+		bool				getIsRegistred(void) const;
+		const std::string	getUsername(void) const;
+		const std::string	getNickname(void) const;
 };
