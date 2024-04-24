@@ -25,7 +25,7 @@ void	Server::_portAndPasswordHandling(char* port) {
 	ss >> this->_port;
 	if (ss.fail())
 		throw std::runtime_error("stringstream failed !");
-	if (this->_port < 1024 && this->_port > 49151)
+	if (this->_port < 1024 || this->_port > 49151)
 		throw std::runtime_error("bad range of port !");
 	if (this->_password.empty())
 		throw std::runtime_error("Password can't be empty !");

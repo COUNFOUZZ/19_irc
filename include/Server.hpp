@@ -8,7 +8,6 @@
 #include <sys/socket.h>	// socket(), bind(), listen(), accept(), send(), recv()
 #include <netinet/in.h>	// sockaddr_in and inet_ntoa()
 #include <arpa/inet.h>	// htons(), htonl(), ntohs(), ntohl(), inet_addr()
-#include <sys/epoll.h>	// epoll_create(), epoll_ctl(), epoll_wait()
 #include <unistd.h>		// close()
 #include <fcntl.h>		// fcntl()
 #include <cstring>		// memset()
