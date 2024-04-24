@@ -2,6 +2,7 @@
 
 Server::Server(char* port, char* password) : _password(password) {
 	this->_portAndPasswordHandling(port);
+	this->_initCmds();
 	this->_initServer();
 	this->_runServer();
 }
@@ -29,6 +30,12 @@ void	Server::_portAndPasswordHandling(char* port) {
 		throw std::runtime_error("bad range of port !");
 	if (this->_password.empty())
 		throw std::runtime_error("Password can't be empty !");
+}
+
+void	Server::_initCmds(void) {
+	this->_commands["CAP"] = &Server::_cap;
+	this->_commands["NICK"] = &Server::_nick;
+	this->_commands["USER"] = &Server::_user;
 }
 
 void	Server::_initServer(void) {
@@ -96,6 +103,20 @@ std::vector<std::string>	Server::_getCommand(std::string input) {
 	return cmds;
 }
 
+void	Server::_commandHandling(int socket, std::vector<std::string> commandsAndArgs) {
+	if (commandsAndArgs.empty())
+		return;
+	std::string command(commandsAndArgs[0]);
+	commandsAndArgs.erase(commandsAndArgs.begin());
+	if (this->_commands.find(command) != this->_commands.end())
+		(this->*_commands[command])(socket, commandsAndArgs, this->_mapSocketAndClients[socket]);
+	else {
+		std::string	errorMsg(ERR_UNKNOWNCOMMAND(command, "command not found !"));
+		if (send(socket, errorMsg.c_str(), errorMsg.size(), 0) == -1)
+			throw std::runtime_error("send() !");
+	}
+}
+
 void	Server::_clientHandling(int socket) {
 	char	buffer[2048] = {0};
 	int		bytesReceived = recv(socket, buffer, sizeof(buffer) - 1, 0);
@@ -113,15 +134,7 @@ void	Server::_clientHandling(int socket) {
 			if (!line.empty())
 				line.erase(line.length());
 			std::vector<std::string>	commands = this->_getCommand(line);
-			
-			std::vector<std::string>::iterator it, ite;
-			it = commands.begin();
-			ite = commands.end();
-
-			while (it != ite) {
-				std::cout << *it << std::endl;
-				++it;
-			}
+			this->_commandHandling(socket, commands);
 		}
 	}
 }
