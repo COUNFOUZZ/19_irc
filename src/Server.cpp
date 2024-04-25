@@ -70,7 +70,7 @@ void	Server::_initServer(void) {
 		throw std::runtime_error("Can't listen !");
 	}
 
-	// Initilize the master set to 0
+	// Initialize the master set to 0
 	FD_ZERO(&this->_masterSet); 
 	FD_SET(this->_serverSocket, &this->_masterSet);
 }
