@@ -41,8 +41,9 @@ class Server {
 		void						_clientHandling(int socket);
 		std::vector<std::string>	_getCommand(std::string input);
 		void						_commandHandling(int socket, std::vector<std::string> commandsAndArgs);
-		bool	_nickAlreadyTaken(std::string newNick, Client cl);
-		bool	_isValidNickname(std::string nickname, Client cl);
+		bool						_nickAlreadyTaken(std::string newNick, Client cl);
+		bool						_isValidNickname(std::string nickname, Client cl);
+		bool						_checkNickname(std::string nickname, Client cl);
 	
 		void	_cap(int socket, std::vector<std::string>& arg, Client cl);
 		void	_nick(int socket, std::vector<std::string>& arg, Client cl);
