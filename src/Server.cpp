@@ -36,6 +36,7 @@ void	Server::_initCmds(void) {
 	this->_commands["CAP"] = &Server::_cap;
 	this->_commands["NICK"] = &Server::_nick;
 	this->_commands["USER"] = &Server::_user;
+	this->_commands["PASS"] = &Server::_pass;
 }
 
 void	Server::_initServer(void) {
@@ -134,6 +135,8 @@ void	Server::_clientHandling(int socket) {
 			if (!line.empty())
 				line.erase(line.length());
 			std::vector<std::string>	commands = this->_getCommand(line);
+			for (std::vector<std::string>::iterator it = commands.begin(); it != commands.end(); ++it)
+				std::cout << *it << std::endl;
 			this->_commandHandling(socket, commands);
 		}
 	}

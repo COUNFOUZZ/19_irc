@@ -24,17 +24,21 @@ bool	Server::_checkNickname(std::string nickname, Client cl) {
 }
 
 void	Server::_nick(int socket, std::vector<std::string>& arg, Client cl) {
-	if (!cl.getIsRegistered()) {
-		if (!this->_checkNickname(arg[0], cl))
-			return ;
-		std::stringstream	ss;
-		std::string			socketNbr;
-		ss << socket;
-		if (ss.fail())
-			throw std::runtime_error("stringstream failed !");
-		ss >> socketNbr;
+	static_cast<void>(cl);
+	if (!this->_mapSocketAndClients[socket].getIsRegistered()) {
+		if (!this->_checkNickname(arg[0], this->_mapSocketAndClients[socket]))
+			return;
 		this->_mapSocketAndClients[socket].setNickname(arg[0]);
 		this->_mapNicknameAndClients[arg[0]] = this->_mapSocketAndClients[socket];
 	} else {
+		if (!arg.size())
+			return this->_mapSocketAndClients[socket].sendMessage(ERR_NONICKNAMEGIVEN());
+		if (this->_mapSocketAndClients[socket].getIsRegistered()) {
+			std::string	msg = ":" + this->_mapSocketAndClients[socket].getNickname() + "!" + this->_mapSocketAndClients[socket].getNickname() + "@" + SERVER_NAME + " NICK :" + arg[0] + "\r\n";
+			this->_mapSocketAndClients[socket].sendMessage(msg);
+		}
+		this->_mapNicknameAndClients.erase(this->_mapSocketAndClients[socket].getNickname());
+		this->_mapSocketAndClients[socket].setNickname(arg[0]);
+		this->_mapNicknameAndClients.insert(std::pair<std::string, Client>(this->_mapSocketAndClients[socket].getNickname(), this->_mapSocketAndClients[socket]));
 	}
 }

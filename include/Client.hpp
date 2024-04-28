@@ -11,6 +11,8 @@ class Client
 		bool		_isRegistered;
 		std::string	_username;
 		std::string	_nickname;
+		std::string	_realname;
+		std::string	_password;
 
 	public:
 		Client(void);
@@ -21,13 +23,19 @@ class Client
 
 
 		void	sendMessage(const std::string& message) const;
+		bool	isReadyToBeRegister(void) const;
 
 	/*** Setters ***/
+		void	setIsRegistered(bool value);
 		void	setUsername(std::string username);
 		void	setNickname(std::string nickname);
+		void	setRealname(std::string realname);
+		void	setPassword(std::string password);
 
 	/*** Getters ***/
 		bool				getIsRegistered(void) const;
 		const std::string	getUsername(void) const;
 		const std::string	getNickname(void) const;
+		const std::string	getRealname(void) const;
+		const std::string	getPassword(void) const;
 };

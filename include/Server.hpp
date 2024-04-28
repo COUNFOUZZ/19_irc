@@ -44,10 +44,11 @@ class Server {
 		bool						_nickAlreadyTaken(std::string newNick, Client cl);
 		bool						_isValidNickname(std::string nickname, Client cl);
 		bool						_checkNickname(std::string nickname, Client cl);
-	
+
 		void	_cap(int socket, std::vector<std::string>& arg, Client cl);
 		void	_nick(int socket, std::vector<std::string>& arg, Client cl);
 		void	_user(int socket, std::vector<std::string>& arg, Client cl);
+		void	_pass(int socket, std::vector<std::string>& arg, Client cl);
 	public:
 		Server(char* port, char* password);
 		~Server(void);
