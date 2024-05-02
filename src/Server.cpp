@@ -27,7 +27,7 @@ void	Server::_portAndPasswordHandling(char* port) {
 	if (ss.fail())
 		throw std::runtime_error("stringstream failed !");
 	if (this->_port < 1024 || this->_port > 49151)
-		throw std::runtime_error("bad range of port !");
+		throw std::runtime_error("bad range of port ! (port available 1024 to 49151)");
 	if (this->_password.empty())
 		throw std::runtime_error("Password can't be empty !");
 }
@@ -118,6 +118,11 @@ void	Server::_commandHandling(int socket, std::vector<std::string> commandsAndAr
 	}
 }
 
+void	Server::_welcome(int socket) {
+	this->_mapSocketAndClients[socket].sendMessage(RPL_WELCOME(this->_mapSocketAndClients[socket].getNickname()));
+	// error, welcome msg appear twice and need to turn isWelcomed to true
+}
+
 void	Server::_clientHandling(int socket) {
 	char	buffer[2048] = {0};
 	int		bytesReceived = recv(socket, buffer, sizeof(buffer) - 1, 0);
@@ -139,6 +144,7 @@ void	Server::_clientHandling(int socket) {
 				std::cout << *it << std::endl;
 			this->_commandHandling(socket, commands);
 		}
+		this->_welcome(socket);
 	}
 }
 

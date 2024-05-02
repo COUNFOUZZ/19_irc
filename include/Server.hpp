@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../include/err.hpp"
+#include "../include/rpl.hpp"
 #include "../include/Client.hpp"
 #include <iostream>
 #include <cctype>
@@ -44,6 +45,7 @@ class Server {
 		bool						_nickAlreadyTaken(std::string newNick, Client cl);
 		bool						_isValidNickname(std::string nickname, Client cl);
 		bool						_checkNickname(std::string nickname, Client cl);
+		void						_welcome(int socket);
 
 		void	_cap(int socket, std::vector<std::string>& arg, Client cl);
 		void	_nick(int socket, std::vector<std::string>& arg, Client cl);

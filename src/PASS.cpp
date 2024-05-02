@@ -1,5 +1,4 @@
 #include "../include/Server.hpp"
-#include "../include/config.hpp"
 
 void	Server::_pass(int socket, std::vector<std::string>& arg, Client cl) {
 	static_cast<void>(cl);
