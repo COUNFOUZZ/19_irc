@@ -38,6 +38,7 @@ void	Server::_initCmds(void) {
 	this->_commands["USER"] = &Server::_user;
 	this->_commands["PASS"] = &Server::_pass;
 	this->_commands["QUIT"] = &Server::_quit;
+	this->_commands["PING"] = &Server::_ping;
 }
 
 void	Server::_initServer(void) {
@@ -147,7 +148,6 @@ void	Server::_clientHandling(int socket) {
 				std::cout << *it << std::endl;
 			this->_commandHandling(socket, commands);
 		}
-		// this->_welcome(socket);
 	}
 }
 
