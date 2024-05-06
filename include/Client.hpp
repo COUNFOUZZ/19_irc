@@ -12,6 +12,7 @@ class Client
 		std::string	_username;
 		std::string	_nickname;
 		std::string	_realname;
+		std::string	_hostname;
 		std::string	_password;
 
 	public:
@@ -30,6 +31,7 @@ class Client
 		void	setUsername(std::string username);
 		void	setNickname(std::string nickname);
 		void	setRealname(std::string realname);
+		void	setHostname(std::string hostname);
 		void	setPassword(std::string password);
 
 	/*** Getters ***/
@@ -37,5 +39,6 @@ class Client
 		const std::string	getUsername(void) const;
 		const std::string	getNickname(void) const;
 		const std::string	getRealname(void) const;
+		const std::string	getHostname(void) const;
 		const std::string	getPassword(void) const;
 };

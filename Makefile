@@ -1,7 +1,7 @@
 NAME = ircserv
 OBJS_DIR = objs
 DIR_SRC = src/
-FILES = main.cpp Server.cpp Client.cpp CAP.cpp NICK.cpp USER.cpp Channel.cpp PASS.cpp
+FILES = main.cpp Server.cpp Client.cpp CAP.cpp NICK.cpp USER.cpp Channel.cpp PASS.cpp QUIT.cpp
 SRCS = $(addprefix $(DIR_SRC), $(FILES))
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.cpp=.o))
 CFLAGS = -Wall -Wextra -Werror -g

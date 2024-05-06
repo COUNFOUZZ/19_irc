@@ -37,6 +37,7 @@ void	Server::_initCmds(void) {
 	this->_commands["NICK"] = &Server::_nick;
 	this->_commands["USER"] = &Server::_user;
 	this->_commands["PASS"] = &Server::_pass;
+	this->_commands["QUIT"] = &Server::_quit;
 }
 
 void	Server::_initServer(void) {
@@ -119,7 +120,10 @@ void	Server::_commandHandling(int socket, std::vector<std::string> commandsAndAr
 }
 
 void	Server::_welcome(int socket) {
-	this->_mapSocketAndClients[socket].sendMessage(RPL_WELCOME(this->_mapSocketAndClients[socket].getNickname()));
+	if (!this->_mapSocketAndClients[socket].getIsRegistered() && !this->_mapSocketAndClients[socket].getPassword().empty() && this->_mapSocketAndClients[socket].isReadyToBeRegister()) {
+		this->_mapSocketAndClients[socket].setIsRegistered(true);
+		this->_mapSocketAndClients[socket].sendMessage(RPL_WELCOME(this->_mapSocketAndClients[socket].getNickname()));
+	}
 	// error, welcome msg appear twice and need to turn isWelcomed to true
 }
 
