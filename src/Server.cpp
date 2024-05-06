@@ -124,7 +124,6 @@ void	Server::_welcome(int socket) {
 		this->_mapSocketAndClients[socket].setIsRegistered(true);
 		this->_mapSocketAndClients[socket].sendMessage(RPL_WELCOME(this->_mapSocketAndClients[socket].getNickname()));
 	}
-	// error, welcome msg appear twice and need to turn isWelcomed to true
 }
 
 void	Server::_clientHandling(int socket) {
@@ -148,7 +147,7 @@ void	Server::_clientHandling(int socket) {
 				std::cout << *it << std::endl;
 			this->_commandHandling(socket, commands);
 		}
-		this->_welcome(socket);
+		// this->_welcome(socket);
 	}
 }
 
