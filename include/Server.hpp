@@ -53,6 +53,7 @@ class Server {
 		void	_pass(int socket, std::vector<std::string>& arg, Client cl);
 		void	_quit(int socket, std::vector<std::string>& arg, Client cl);
 		void	_ping(int socket, std::vector<std::string>& arg, Client cl);
+		void	_privmsg(int socket, std::vector<std::string>& arg, Client cl);
 	public:
 		Server(char* port, char* password);
 		~Server(void);

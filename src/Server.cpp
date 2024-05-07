@@ -39,6 +39,7 @@ void	Server::_initCmds(void) {
 	this->_commands["PASS"] = &Server::_pass;
 	this->_commands["QUIT"] = &Server::_quit;
 	this->_commands["PING"] = &Server::_ping;
+	this->_commands["PRIVMSG"] = &Server::_privmsg;
 }
 
 void	Server::_initServer(void) {
