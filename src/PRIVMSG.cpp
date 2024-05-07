@@ -10,12 +10,16 @@ void	Server::_privmsg(int socket, std::vector<std::string>& arg, Client cl) {
 			break;
 		}
 	}
-	std::string	msg(":" + this->_mapSocketAndClients[socket].getNickname() + "!" + this->_mapSocketAndClients[socket].getUsername() + "@" + this->_mapSocketAndClients[socket].getHostname() + " PRIVMSG " + target.getNickname() + " ");
-	std::string	buffer;
+	if (!target.getIsRegistered()) {
+		this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHNICK(arg[0]));
+		return;
+	}
+		std::string	msg(":" + this->_mapSocketAndClients[socket].getNickname() + "!" + this->_mapSocketAndClients[socket].getUsername() + "@" + this->_mapSocketAndClients[socket].getHostname() + " PRIVMSG " + target.getNickname() + " ");
+		std::string	buffer;
 
-	for (size_t i = 1; i < arg.size(); ++i)
-		buffer += arg[i] + ' ';
-	buffer.erase(buffer.size() - 1);
-	msg += buffer + "\r\n";
-	target.sendMessage(msg);
+		for (size_t i = 1; i < arg.size(); ++i)
+			buffer += arg[i] + ' ';
+		buffer.erase(buffer.size() - 1);
+		msg += buffer + "\r\n";
+		target.sendMessage(msg);
 }
