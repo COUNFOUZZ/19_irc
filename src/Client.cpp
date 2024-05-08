@@ -44,3 +44,4 @@ const std::string	Client::getNickname(void) const {return this->_nickname;}
 const std::string	Client::getRealname(void) const {return this->_realname;}
 const std::string	Client::getHostname(void) const {return this->_hostname;}
 const std::string	Client::getPassword(void) const {return this->_password;}
+const std::string	Client::getPrefix(void) const {return (":" + this->getNickname() + "!" + this->getUsername() + "@" + this->getHostname());}

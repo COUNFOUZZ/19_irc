@@ -6,6 +6,7 @@ Server::Server(char* port, char* password) : _password(password) {
 	this->_initServer();
 	this->_runServer();
 }
+
 Server::~Server(void) {}
 
 bool	Server::_arrIsDigit(char* nbr) {
@@ -81,7 +82,6 @@ void	Server::_initServer(void) {
 }
 
 int Server::_acceptClient(void) {
-
 	sockaddr_storage	client_addr;
 	socklen_t 			addr_len = sizeof(client_addr);
 

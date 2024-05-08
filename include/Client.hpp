@@ -41,4 +41,5 @@ class Client
 		const std::string	getRealname(void) const;
 		const std::string	getHostname(void) const;
 		const std::string	getPassword(void) const;
+		const std::string	getPrefix(void)	const;
 };

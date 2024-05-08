@@ -35,7 +35,7 @@ void	Server::_nick(int socket, std::vector<std::string>& arg, Client cl) {
 			if (!arg.size())
 				return this->_mapSocketAndClients[socket].sendMessage(ERR_NONICKNAMEGIVEN());
 			if (this->_mapSocketAndClients[socket].getIsRegistered()) {
-				std::string	msg = ":" + this->_mapSocketAndClients[socket].getNickname() + "!" + this->_mapSocketAndClients[socket].getNickname() + "@" + SERVER_NAME + " NICK :" + arg[0] + "\r\n";
+				std::string	msg = this->_mapSocketAndClients[socket].getPrefix() + " NICK :" + arg[0] + "\r\n";
 				this->_mapSocketAndClients[socket].sendMessage(msg);
 			}
 			this->_mapNicknameAndClients.erase(this->_mapSocketAndClients[socket].getNickname());
