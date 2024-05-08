@@ -143,12 +143,11 @@ void	Server::_clientHandling(int socket) {
 		std::string			line;
 
 		while (std::getline(ss, line, '\n')) {
-			if (!line.empty())
-				line.erase(line.length());
 			std::vector<std::string>	commands = this->_getCommand(line);
-			std::cout << "Debug cmd:" << std::endl;
+			std::cout << "======= Socket " << socket << " =======" << std::endl;
 			for (std::vector<std::string>::iterator it = commands.begin(); it != commands.end(); ++it)
 				std::cout << *it << " ";
+			std::cout << std::endl << "========================" << std::endl;
 			std::cout << std::endl;
 			this->_commandHandling(socket, commands);
 		}
