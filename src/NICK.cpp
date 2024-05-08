@@ -10,9 +10,28 @@ bool	Server::_nickAlreadyTaken(std::string newNick, Client cl) {
 	return false;
 }
 
+bool Server::_isSpecialChar(std::string nickname) const {
+    const std::string specialChar("-_[]{}|`");
+
+    for (size_t i = 0; i < nickname.size(); ++i) {
+        bool isSpecial = false;
+        for (size_t j = 0; j < specialChar.size(); ++j) {
+            if (nickname[i] == specialChar[j]) {
+                isSpecial = true;
+                break;
+            }
+        }
+        if (!isalnum(nickname[i]) && !isSpecial)
+            return false;
+    }
+    return true;
+}
+
 bool	Server::_isValidNickname(std::string nickname, Client cl) {
-	if (nickname.length() > 9 || nickname == "anonymous") {	// Need to check if "anonymous" is entered in uppercase or different letter with upper and lower case ?
-		cl.sendMessage(ERR_ERRONEUSNICKNAME());
+	if (nickname.empty() || nickname.length() > 9
+		|| nickname == "anonymous" || !isalpha(nickname[0])
+		|| !this->_isSpecialChar(nickname)) {
+		cl.sendMessage(ERR_ERRONEUSNICKNAME(nickname));
 		return false;
 	}
 	return true;
