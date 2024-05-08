@@ -40,6 +40,7 @@ void	Server::_initCmds(void) {
 	this->_commands["QUIT"] = &Server::_quit;
 	this->_commands["PING"] = &Server::_ping;
 	this->_commands["PRIVMSG"] = &Server::_privmsg;
+	this->_commands["JOIN"] = &Server::_join;
 }
 
 void	Server::_initServer(void) {
@@ -145,8 +146,10 @@ void	Server::_clientHandling(int socket) {
 			if (!line.empty())
 				line.erase(line.length());
 			std::vector<std::string>	commands = this->_getCommand(line);
+			std::cout << "Debug cmd:" << std::endl;
 			for (std::vector<std::string>::iterator it = commands.begin(); it != commands.end(); ++it)
-				std::cout << *it << std::endl;
+				std::cout << *it << " ";
+			std::cout << std::endl;
 			this->_commandHandling(socket, commands);
 		}
 	}
