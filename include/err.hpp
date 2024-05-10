@@ -10,3 +10,5 @@
 #define ERR_NEEDMOREPARAMS(reason) (std::string("461 :") + reason + "\r\n")
 #define ERR_ALREADYREGISTERED(reason) (std::string("462 :") + reason + "\r\n")
 #define ERR_PASSWDMISMATCH(nickname) (std::string(":") + SERVER_NAME + " 464 " + nickname + SERVER_NAME + " :Password incorrect" + "\r\n")
+
+#define RPL_NOTOPIC(channel) (std::string(":") + SERVER_NAME + " 332 " + "No topic set for channel #" + channel + "\r\n")
