@@ -3,6 +3,7 @@
 #include "../include/err.hpp"
 #include "../include/rpl.hpp"
 #include "../include/Client.hpp"
+#include "../include/Channel.hpp"
 #include <iostream>
 #include <cctype>
 #include <sstream>
@@ -32,6 +33,7 @@ class Server {
 		std::map<std::string, cmdFct> 	_commands;
 		std::map<int, Client>			_mapSocketAndClients;
 		std::map<std::string, Client>	_mapNicknameAndClients;
+		std::map<std::string, Channel>	_channels;
 
 		void						_portAndPasswordHandling(char* port);
 		bool						_arrIsDigit(char* nbr);

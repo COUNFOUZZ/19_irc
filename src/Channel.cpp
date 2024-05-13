@@ -14,3 +14,7 @@ Channel::~Channel(void) {}
 const std::string	Channel::getName() const {
 	return (this->_name);
 }
+
+
+/*** Getters ***/
+
