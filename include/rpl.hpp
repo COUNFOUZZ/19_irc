@@ -6,3 +6,4 @@
 #define RPL_NOTOPIC(channel) (std::string(":") + SERVER_NAME + " 331 " + "No topic set for channel " + channel + "\r\n")
 #define RPL_TOPIC(nickname, channel, topic) (std::string(":") + SERVER_NAME + " 332 " + nickname + " " + channel + " :" + topic + "\r\n")
 #define RPL_NAMREPLY(nickname, channel, usersList) (std::string(":") + SERVER_NAME + " 353 " + nickname + " = " + channel + " :" + usersList  + "\r\n")
+#define RPL_ENDOFNAMES(channel, nickname) (std::string(":") + SERVER_NAME + " 366 " + nickname + " " + channel + " :End of NAMES list\r\n")
