@@ -11,9 +11,12 @@ void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
 	//First : create the channel if it doesnt exist yet
 	if (this->_channels.find(channelName) == this->_channels.end()) {
 		this->_channels[channelName] = Channel(channelName);
-		std::cout << "Channel name: " << this->_channels[channelName].getName() << std::endl;
+		this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);
+		std::string rpl_msg(this->_mapSocketAndClients[socket].getPrefix() + " JOIN " + channelName + "\r\n");
+		this->_mapSocketAndClients[socket].sendMessage(rpl_msg);
 		this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(channelName));
+	} else {
+		this->_channels[channelName].clientAnnounceHimself(this->_mapSocketAndClients[socket]);
+		this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);
 	}
-
-	//Second : Join channel if exists
 }

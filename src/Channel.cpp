@@ -1,20 +1,26 @@
 #include "../include/Channel.hpp"
 
 
-Channel::Channel(void) {
-	this->_name = "";
-}
-
-Channel::Channel(std::string name) : _name(name) {}
-
+Channel::Channel(void) : _channelName(""), _topic("") {}
+Channel::Channel(std::string channelName) : _channelName(channelName), _topic("") {}
 Channel::~Channel(void) {}
 
-/*** Getters ***/
-
-const std::string	Channel::getName() const {
-	return (this->_name);
+/*** Methods ***/
+void	Channel::addUser(Client client) {
+	this->_client.push_back(client);
 }
 
+void	Channel::clientAnnounceHimself(Client client) const {
+	for (size_t i = 0; i < this->_client.size(); ++i) {
+		std::string	rpl_msg(client.getPrefix() + " JOIN " + ":" + this->getChannelName() + "\r\n");
+		this->_client[i].sendMessage(rpl_msg);
+	}
+}
+
+/*** Setters ***/
+void	Channel::setChannelName(std::string channelName) {this->_channelName = channelName;}
+void	Channel::setTopic(std::string topic) {this->_topic = topic;}
 
 /*** Getters ***/
-
+const std::string	Channel::getChannelName(void) const {return this->_channelName;}
+const std::string	Channel::getTopic(void) const {return this->_topic;}
