@@ -32,7 +32,6 @@ void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
 	if (arg.size() < 1)
 		return (this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("JOIN")));
 
-	//First : create the channel if it doesnt exist yet
 	for (size_t i = 0; i < arg.size(); ++i) {
 		channelName = arg[i];
 		if (!this->_isValidChannel(channelName)) {
@@ -46,8 +45,8 @@ void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
 			this->_mapSocketAndClients[socket].sendMessage(rpl_msg);
 			this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(channelName));
 		} else {
-			this->_channels[channelName].clientAnnounceHimself(this->_mapSocketAndClients[socket]);
 			this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);
+			this->_channels[channelName].clientAnnounceHimself(this->_mapSocketAndClients[socket]);
 			if (this->_channels[channelName].getTopic().empty())
 				this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(channelName));
 			else
