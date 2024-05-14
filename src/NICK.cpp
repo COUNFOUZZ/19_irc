@@ -28,8 +28,8 @@ bool Server::_isSpecialChar(std::string& nickname) const {
 }
 
 bool	Server::_isValidNickname(std::string& nickname, Client cl) {
-	if (nickname.length() > 9)
-		nickname = nickname.substr(0, 9);
+	if (nickname.length() > NICK_LIMIT_CHAR)
+		nickname = nickname.substr(0, NICK_LIMIT_CHAR);
 	if (nickname.empty() || nickname == "anonymous"
 		|| !isalpha(nickname[0]) || !this->_isSpecialChar(nickname)) {
 		cl.sendMessage(ERR_ERRONEUSNICKNAME(nickname));
