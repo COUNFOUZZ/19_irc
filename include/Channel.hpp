@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../include/Client.hpp"
+#include "../include/rpl.hpp"
 #include <vector>
 
 class Channel
@@ -23,5 +24,6 @@ class Channel
 
 		const std::string	getChannelName(void) const;
 		const std::string	getTopic(void) const;
+		void				getListOfUsers(Client client) const;
 };
 

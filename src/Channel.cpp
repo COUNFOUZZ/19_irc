@@ -24,3 +24,13 @@ void	Channel::setTopic(std::string topic) {this->_topic = topic;}
 /*** Getters ***/
 const std::string	Channel::getChannelName(void) const {return this->_channelName;}
 const std::string	Channel::getTopic(void) const {return this->_topic;}
+void				Channel::getListOfUsers(Client client) const {
+	std::string	users;
+
+	for (size_t i = 0; i < this->_client.size(); ++i) {
+		users += this->_client[i].getNickname();
+		if (i != this->_client.size() - 1)
+			users += " ";
+	}
+	client.sendMessage(RPL_NAMREPLY(client.getNickname(), this->getChannelName(), users));
+}
