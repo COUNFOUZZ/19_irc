@@ -48,7 +48,10 @@ class Server {
 		bool						_isValidNickname(std::string& nickname, Client cl);
 		bool						_checkNickname(std::string& nickname, Client cl);
 		void						_welcome(int socket);
-		bool						_isSpecialChar(std::string& nickname) const;
+		bool						_checkChannel(std::string channelName, Client cl) const;
+		bool						_isSpecialCharForNickname(std::string& nickname) const;
+		bool						_isValidChannel(std::string channelName, Client cl) const;
+		bool						_isValidCharChannel(std::string channelName) const;
 
 		void	_cap(int socket, std::vector<std::string>& arg, Client cl);
 		void	_nick(int socket, std::vector<std::string>& arg, Client cl);

@@ -10,7 +10,7 @@ bool	Server::_nickAlreadyTaken(std::string& newNick, Client cl) {
 	return false;
 }
 
-bool Server::_isSpecialChar(std::string& nickname) const {
+bool Server::_isSpecialCharForNickname(std::string& nickname) const {
     const std::string specialChar("-_[]{}|`");
 
     for (size_t i = 0; i < nickname.size(); ++i) {
@@ -31,7 +31,7 @@ bool	Server::_isValidNickname(std::string& nickname, Client cl) {
 	if (nickname.length() > NICK_LIMIT_CHAR)
 		nickname = nickname.substr(0, NICK_LIMIT_CHAR);
 	if (nickname.empty() || nickname == "anonymous"
-		|| !isalpha(nickname[0]) || !this->_isSpecialChar(nickname)) {
+		|| !isalpha(nickname[0]) || !this->_isSpecialCharForNickname(nickname)) {
 		cl.sendMessage(ERR_ERRONEUSNICKNAME(nickname));
 		return false;
 	}
