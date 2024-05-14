@@ -1,6 +1,6 @@
 #include "../include/Server.hpp"
 
-bool	Server::_nickAlreadyTaken(std::string newNick, Client cl) {
+bool	Server::_nickAlreadyTaken(std::string& newNick, Client cl) {
 	for (size_t i = 0; i < this->_mapSocketAndClients.size(); ++i) {
 		if (newNick == this->_mapSocketAndClients[i].getNickname()) {
 			cl.sendMessage(ERR_NICKNAMEINUSE(newNick));			
@@ -10,7 +10,7 @@ bool	Server::_nickAlreadyTaken(std::string newNick, Client cl) {
 	return false;
 }
 
-bool Server::_isSpecialChar(std::string nickname) const {
+bool Server::_isSpecialChar(std::string& nickname) const {
     const std::string specialChar("-_[]{}|`");
 
     for (size_t i = 0; i < nickname.size(); ++i) {
@@ -27,17 +27,18 @@ bool Server::_isSpecialChar(std::string nickname) const {
     return true;
 }
 
-bool	Server::_isValidNickname(std::string nickname, Client cl) {
-	if (nickname.empty() || nickname.length() > 9
-		|| nickname == "anonymous" || !isalpha(nickname[0])
-		|| !this->_isSpecialChar(nickname)) {
+bool	Server::_isValidNickname(std::string& nickname, Client cl) {
+	if (nickname.length() > 9)
+		nickname = nickname.substr(0, 9);
+	if (nickname.empty() || nickname == "anonymous"
+		|| !isalpha(nickname[0]) || !this->_isSpecialChar(nickname)) {
 		cl.sendMessage(ERR_ERRONEUSNICKNAME(nickname));
 		return false;
 	}
 	return true;
 }
 
-bool	Server::_checkNickname(std::string nickname, Client cl) {
+bool	Server::_checkNickname(std::string& nickname, Client cl) {
 	return !this->_nickAlreadyTaken(nickname, cl) && this->_isValidNickname(nickname, cl);
 }
 
