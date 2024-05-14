@@ -10,18 +10,34 @@ void	Channel::addUser(Client client) {
 	this->_clients.push_back(client);
 }
 
-// void	Channel::sendMessage(std::string message, Client cl) const {
-// 	std::cout << "debug message: " << message << std::endl;
-// 	for (size_t i = 0; i < this->_clients.size(); ++i) {
-// 		if (this->_clients[i].getNickname() != cl.getNickname())
-// 			this->_clients[i].sendMessage(message);
-// 	}
-// }
+void	Channel::broadcast(std::string message, Client cl) const {
+	for (size_t i = 0; i < this->_clients.size(); ++i) {
+		if (this->_clients[i].getNickname() != cl.getNickname())
+			this->_clients[i].sendMessage(message);
+	}
+}
 
 void	Channel::clientAnnounceHimself(Client client) const {
 	for (size_t i = 0; i < this->_clients.size(); ++i) {
 		std::string	rpl_msg(client.getPrefix() + " JOIN " + this->getChannelName() + "\r\n");
 		this->_clients[i].sendMessage(rpl_msg);
+	}
+}
+
+bool	Channel::isUserIsInChannel(std::string nickname) const {
+	for (std::vector<Client>::const_iterator it = this->_clients.begin(); it < this->_clients.end(); ++it) {
+		if (it->getNickname() == nickname)
+			return true;
+	}
+	return false;
+}
+
+void	Channel::eraseUserFromChannel(std::string nickname) {
+	for (std::vector<Client>::iterator it = this->_clients.begin(); it < this->_clients.end(); ++it) {
+		if (it->getNickname() == nickname) {
+			this->_clients.erase(it);
+			return;
+		}
 	}
 }
 

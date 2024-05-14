@@ -42,6 +42,7 @@ void	Server::_initCmds(void) {
 	this->_commands["PING"] = &Server::_ping;
 	this->_commands["PRIVMSG"] = &Server::_privmsg;
 	this->_commands["JOIN"] = &Server::_join;
+	this->_commands["PART"] = &Server::_part;
 }
 
 void	Server::_initServer(void) {

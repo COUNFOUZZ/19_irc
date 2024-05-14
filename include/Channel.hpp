@@ -3,6 +3,7 @@
 #include "../include/Client.hpp"
 #include "../include/rpl.hpp"
 #include <vector>
+#include <iterator>
 
 class Channel
 {
@@ -18,7 +19,9 @@ class Channel
 
 		void	addUser(Client client);
 		void	clientAnnounceHimself(Client client) const;
-		// void	sendMessage(std::string message, Client cl) const;
+		void	broadcast(std::string message, Client cl) const;
+		void	eraseUserFromChannel(std::string nickname);
+		bool	isUserIsInChannel(std::string nickname) const;
 
 		void	setChannelName(std::string channelName);
 		void	setTopic(std::string topic);
