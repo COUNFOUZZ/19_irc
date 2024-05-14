@@ -18,5 +18,9 @@ void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
 	} else {
 		this->_channels[channelName].clientAnnounceHimself(this->_mapSocketAndClients[socket]);
 		this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);
+		if (this->_channels[channelName].getTopic().empty())
+			this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(channelName));
+		else
+			this->_mapSocketAndClients[socket].sendMessage(RPL_TOPIC(this->_mapSocketAndClients[socket].getNickname(), channelName, this->_channels[channelName].getTopic()));
 	}
 }
