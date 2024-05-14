@@ -3,6 +3,7 @@
 #include "./config.hpp"
 
 #define	ERR_NOSUCHNICK(nickname) (std::string(":") + " 401 " + nickname + " No such nick/channel\r\n")
+#define ERR_NOSUCHCHANNEL(nickname, channel) (std::string(":") + " 403 " + nickname + " " + channel + " No such channel\r\n")
 #define	ERR_UNKNOWNCOMMAND(command, reason) ("421 " + command + " :" + reason + "\r\n")
 #define	ERR_NONICKNAMEGIVEN(nickname) (std::string(":") + SERVER_NAME + " 431 *" + nickname + " :No nickname given\r\n")
 #define	ERR_ERRONEUSNICKNAME(nickname) ("432 " + nickname + " :Erroneus nickname\r\n")

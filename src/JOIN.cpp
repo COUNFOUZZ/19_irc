@@ -18,17 +18,12 @@ bool	Server::_isValidCharChannel(std::string channelName) const {
 	return true;
 }
 
-bool	Server::_isValidChannel(std::string channelName, Client cl) const {
+bool	Server::_isValidChannel(std::string channelName) const {
 	if (channelName.size() < 2 || channelName.size() > 50
-		|| channelName[0] != '#' || channelName[0] != '&'
-		|| channelName[0] != '!' || channelName[0] != '+'
+		|| (channelName[0] != '#' && channelName[0] != '&' && channelName[0] != '!' && channelName[0] != '+')
 		|| !this->_isValidCharChannel(channelName))
 		return false;
 	return true;
-}
-
-bool	Server::_checkChannel(std::string channelName, Client cl) const {
-	return this->_isValidChannel(channelName, cl);
 }
 
 void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
@@ -40,7 +35,10 @@ void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
 	//First : create the channel if it doesnt exist yet
 	for (size_t i = 0; i < arg.size(); ++i) {
 		channelName = arg[i];
-		this->_isValidChannel(channelName, this->_mapSocketAndClients[socket]);
+		if (!this->_isValidChannel(channelName)) {
+			this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHCHANNEL(this->_mapSocketAndClients[socket].getNickname(), channelName));
+			continue;
+		}
 		if (this->_channels.find(channelName) == this->_channels.end()) {
 			this->_channels[channelName] = Channel(channelName);
 			this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);
