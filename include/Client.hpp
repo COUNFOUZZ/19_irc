@@ -35,7 +35,7 @@ class Client
 		void	setRealname(std::string realname);
 		void	setHostname(std::string hostname);
 		void	setPassword(std::string password);
-		void	setUserModes(std::string mode);
+		void	setUserModes(char mode);
 		void	delUserModes(char mode);
 
 	/*** Getters ***/

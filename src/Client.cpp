@@ -36,9 +36,12 @@ void	Client::setNickname(std::string nickname) {this->_nickname = nickname;}
 void	Client::setRealname(std::string realname) {this->_realname = realname;}
 void	Client::setHostname(std::string hostname) {this->_hostname = hostname;}
 void	Client::setPassword(std::string password) {this->_password = password;}
-void	Client::setUserModes(std::string mode) {this->_userModes.append(mode);}
+void	Client::setUserModes(char mode) {
+	if (this->_userModes.find(mode) == this->_userModes.npos)
+		this->_userModes += mode;
+}
 void	Client::delUserModes(char mode) {
-	while (this->_userModes.find(mode) != this->_userModes.npos)
+	if (this->_userModes.find(mode) != this->_userModes.npos)
 		this->_userModes.erase(std::remove(this->_userModes.begin(), this->_userModes.end(), mode));
 }
 
