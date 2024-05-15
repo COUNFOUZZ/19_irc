@@ -38,8 +38,8 @@ int main()
 	std::cout << "userModes : " << cli.getUserModes() << std::endl;
 	std::cout << "channelModes : " << chan.getChannelModes() << std::endl;
 
-	cli.setUserModes("tk");
-	chan.setChannelModes("tk");
+	cli.setUserModes("itkii");
+	chan.setChannelModes("tki");
 
 	std::cout << "userModes : " << cli.getUserModes() << std::endl;
 	std::cout << "channelModes : " << chan.getChannelModes() << std::endl;
@@ -50,4 +50,9 @@ int main()
 	}
 	else
 		std::cout << "Yes i" << std::endl;
+
+	cli.delUserModes('i');
+	chan.delChannelModes('i');
+	std::cout << "userModes : " << cli.getUserModes() << std::endl;
+	std::cout << "channelModes : " << chan.getChannelModes() << std::endl;
 }

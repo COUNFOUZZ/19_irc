@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <sys/socket.h>
+#include <algorithm>
 
 class Client
 {
@@ -35,6 +36,7 @@ class Client
 		void	setHostname(std::string hostname);
 		void	setPassword(std::string password);
 		void	setUserModes(std::string mode);
+		void	delUserModes(char mode);
 
 	/*** Getters ***/
 		bool			getIsRegistered(void) const;

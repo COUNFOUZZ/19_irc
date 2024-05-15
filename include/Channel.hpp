@@ -4,6 +4,7 @@
 #include "../include/rpl.hpp"
 #include <vector>
 #include <iterator>
+#include <algorithm>
 
 class Channel
 {
@@ -28,6 +29,7 @@ class Channel
 		void	setChannelName(std::string channelName);
 		void	setTopic(std::string topic);
 		void	setChannelModes(std::string mode);
+		void	delChannelModes(char mode);
 
 	/*** Getters ***/
 		const std::string	getChannelName(void) const;
