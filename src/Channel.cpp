@@ -1,8 +1,8 @@
 #include "../include/Channel.hpp"
 
 
-Channel::Channel(void) : _channelName(""), _topic("") {}
-Channel::Channel(std::string channelName) : _channelName(channelName), _topic("") {}
+Channel::Channel(void) : _channelName(""), _topic(""), _channelModes("") {}
+Channel::Channel(std::string channelName) : _channelName(channelName), _topic(""), _channelModes("") {}
 Channel::~Channel(void) {}
 
 /*** Methods ***/
@@ -44,6 +44,7 @@ void	Channel::eraseUserFromChannel(std::string nickname) {
 /*** Setters ***/
 void	Channel::setChannelName(std::string channelName) {this->_channelName = channelName;}
 void	Channel::setTopic(std::string topic) {this->_topic = topic;}
+void	Channel::setChannelModes(std::string mode) {this->_channelModes.append(mode);}
 
 /*** Getters ***/
 const std::string	Channel::getChannelName(void) const {return this->_channelName;}

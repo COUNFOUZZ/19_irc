@@ -1,7 +1,7 @@
 #include "../include/Client.hpp"
 
-Client::Client(void) : _socket(-1), _isRegistered(false), _username(""), _nickname(""), _realname(""), _hostname(""), _password("") {}
-Client::Client(int socket) : _socket(socket), _isRegistered(false), _username(""), _nickname(""), _realname(""), _hostname(""), _password("") {}
+Client::Client(void) : _socket(-1), _isRegistered(false), _username(""), _nickname(""), _realname(""), _hostname(""), _password(""), _userModes("") {}
+Client::Client(int socket) : _socket(socket), _isRegistered(false), _username(""), _nickname(""), _realname(""), _hostname(""), _password(""), _userModes("") {}
 Client::~Client(void) {}
 
 Client&	Client::operator=(const Client& dest) {
@@ -14,6 +14,7 @@ Client&	Client::operator=(const Client& dest) {
 	this->_realname = dest._realname;
 	this->_hostname = dest._hostname;
 	this->_password = dest._password;
+	this->_userModes = dest._userModes;
 	return *this;
 }
 
@@ -35,13 +36,15 @@ void	Client::setNickname(std::string nickname) {this->_nickname = nickname;}
 void	Client::setRealname(std::string realname) {this->_realname = realname;}
 void	Client::setHostname(std::string hostname) {this->_hostname = hostname;}
 void	Client::setPassword(std::string password) {this->_password = password;}
+void	Client::setUserModes(std::string mode) {this->_userModes.append(mode);}
 
 /*** Getters ***/
 
-bool				Client::getIsRegistered(void) const {return this->_isRegistered;}
+bool			Client::getIsRegistered(void) const {return this->_isRegistered;}
 const std::string	Client::getUsername(void) const {return this->_username;}
 const std::string	Client::getNickname(void) const {return this->_nickname;}
 const std::string	Client::getRealname(void) const {return this->_realname;}
 const std::string	Client::getHostname(void) const {return this->_hostname;}
 const std::string	Client::getPassword(void) const {return this->_password;}
 const std::string	Client::getPrefix(void) const {return (":" + this->getNickname() + "!" + this->getUsername() + "@" + this->getHostname());}
+const std::string	Client::getUserModes(void) const {return this->_userModes;}

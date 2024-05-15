@@ -14,6 +14,7 @@ class Client
 		std::string	_realname;
 		std::string	_hostname;
 		std::string	_password;
+		std::string	_userModes;
 
 	public:
 		Client(void);
@@ -33,13 +34,15 @@ class Client
 		void	setRealname(std::string realname);
 		void	setHostname(std::string hostname);
 		void	setPassword(std::string password);
+		void	setUserModes(std::string mode);
 
 	/*** Getters ***/
-		bool				getIsRegistered(void) const;
+		bool			getIsRegistered(void) const;
 		const std::string	getUsername(void) const;
 		const std::string	getNickname(void) const;
 		const std::string	getRealname(void) const;
 		const std::string	getHostname(void) const;
 		const std::string	getPassword(void) const;
 		const std::string	getPrefix(void)	const;
+		const std::string	getUserModes(void) const;
 };
