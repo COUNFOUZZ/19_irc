@@ -1,8 +1,8 @@
 #include "../include/Channel.hpp"
 
 
-Channel::Channel(void) : _channelName(""), _topic("") {}
-Channel::Channel(std::string channelName) : _channelName(channelName), _topic("") {}
+Channel::Channel(void) : _channelName(""), _topic(""), _channelModes("") {}
+Channel::Channel(std::string channelName) : _channelName(channelName), _topic(""), _channelModes("") {}
 Channel::~Channel(void) {}
 
 /*** Methods ***/
@@ -44,10 +44,16 @@ void	Channel::eraseUserFromChannel(std::string nickname) {
 /*** Setters ***/
 void	Channel::setChannelName(std::string channelName) {this->_channelName = channelName;}
 void	Channel::setTopic(std::string topic) {this->_topic = topic;}
+void	Channel::setChannelModes(std::string mode) {this->_channelModes.append(mode);}
+void	Channel::delChannelModes(char mode) {
+	while (this->_channelModes.find(mode) != this->_channelModes.npos)
+		this->_channelModes.erase(std::remove(this->_channelModes.begin(), this->_channelModes.end(), mode));
+}
 
 /*** Getters ***/
 const std::string	Channel::getChannelName(void) const {return this->_channelName;}
 const std::string	Channel::getTopic(void) const {return this->_topic;}
+const std::string	Channel::getChannelModes(void) const {return this->_channelModes;}
 std::vector<Client>	Channel::getClients(void) const {return this->_clients;}
 void				Channel::getListOfUsers(Client client) const {
 	std::string	users;

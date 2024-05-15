@@ -4,6 +4,7 @@
 #include "../include/rpl.hpp"
 #include <vector>
 #include <iterator>
+#include <algorithm>
 
 class Channel
 {
@@ -11,6 +12,7 @@ class Channel
 		std::string			_channelName;
 		std::string			_topic;
 		std::vector<Client>	_clients;
+		std::string		_channelModes;
 
 	public:
 		Channel(void);
@@ -23,11 +25,16 @@ class Channel
 		void	eraseUserFromChannel(std::string nickname);
 		bool	isUserIsInChannel(std::string nickname) const;
 
+	/*** Setters ***/
 		void	setChannelName(std::string channelName);
 		void	setTopic(std::string topic);
+		void	setChannelModes(std::string mode);
+		void	delChannelModes(char mode);
 
+	/*** Getters ***/
 		const std::string	getChannelName(void) const;
 		const std::string	getTopic(void) const;
 		std::vector<Client>	getClients(void) const;
-		void				getListOfUsers(Client client) const;
+		void			getListOfUsers(Client client) const;
+		const std::string	getChannelModes(void) const;
 };
