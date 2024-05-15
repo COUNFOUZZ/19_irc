@@ -34,5 +34,5 @@ class Channel
 		const std::string	getTopic(void) const;
 		std::vector<Client>	getClients(void) const;
 		void			getListOfUsers(Client client) const;
-		const std::string	getChannelModes(void);
+		const std::string	getChannelModes(void) const;
 };

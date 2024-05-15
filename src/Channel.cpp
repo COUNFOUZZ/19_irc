@@ -49,6 +49,7 @@ void	Channel::setChannelModes(std::string mode) {this->_channelModes.append(mode
 /*** Getters ***/
 const std::string	Channel::getChannelName(void) const {return this->_channelName;}
 const std::string	Channel::getTopic(void) const {return this->_topic;}
+const std::string	Channel::getChannelModes(void) const {return this->_channelModes;}
 std::vector<Client>	Channel::getClients(void) const {return this->_clients;}
 void				Channel::getListOfUsers(Client client) const {
 	std::string	users;
