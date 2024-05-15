@@ -44,9 +44,12 @@ void	Channel::eraseUserFromChannel(std::string nickname) {
 /*** Setters ***/
 void	Channel::setChannelName(std::string channelName) {this->_channelName = channelName;}
 void	Channel::setTopic(std::string topic) {this->_topic = topic;}
-void	Channel::setChannelModes(std::string mode) {this->_channelModes.append(mode);}
+void	Channel::setChannelModes(char mode) {
+	if (this->_channelModes.find(mode) == this->_channelModes.npos)
+		this->_channelModes += mode;
+}
 void	Channel::delChannelModes(char mode) {
-	while (this->_channelModes.find(mode) != this->_channelModes.npos)
+	if (this->_channelModes.find(mode) != this->_channelModes.npos)
 		this->_channelModes.erase(std::remove(this->_channelModes.begin(), this->_channelModes.end(), mode));
 }
 

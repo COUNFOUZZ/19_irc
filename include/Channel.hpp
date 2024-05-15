@@ -28,7 +28,7 @@ class Channel
 	/*** Setters ***/
 		void	setChannelName(std::string channelName);
 		void	setTopic(std::string topic);
-		void	setChannelModes(std::string mode);
+		void	setChannelModes(char mode);
 		void	delChannelModes(char mode);
 
 	/*** Getters ***/
