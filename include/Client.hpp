@@ -16,6 +16,7 @@ class Client
 		std::string	_hostname;
 		std::string	_password;
 		std::string	_userModes;
+		bool		_serverOP;
 
 	public:
 		Client(void);
@@ -24,9 +25,9 @@ class Client
 
 		Client&	operator=(const Client& dest);
 
-
 		void	sendMessage(const std::string& message) const;
 		bool	isReadyToBeRegister(void) const;
+		void	delUserModes(char mode);
 
 	/*** Setters ***/
 		void	setIsRegistered(bool value);
@@ -36,10 +37,10 @@ class Client
 		void	setHostname(std::string hostname);
 		void	setPassword(std::string password);
 		void	setUserModes(char mode);
-		void	delUserModes(char mode);
+		void	setServerOP(bool value);
 
 	/*** Getters ***/
-		bool			getIsRegistered(void) const;
+		bool				getIsRegistered(void) const;
 		const std::string	getUsername(void) const;
 		const std::string	getNickname(void) const;
 		const std::string	getRealname(void) const;
@@ -47,4 +48,5 @@ class Client
 		const std::string	getPassword(void) const;
 		const std::string	getPrefix(void)	const;
 		const std::string	getUserModes(void) const;
+		bool				getServerOP(void) const;
 };

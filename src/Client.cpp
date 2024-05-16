@@ -1,7 +1,7 @@
 #include "../include/Client.hpp"
 
-Client::Client(void) : _socket(-1), _isRegistered(false), _username(""), _nickname(""), _realname(""), _hostname(""), _password(""), _userModes("") {}
-Client::Client(int socket) : _socket(socket), _isRegistered(false), _username(""), _nickname(""), _realname(""), _hostname(""), _password(""), _userModes("") {}
+Client::Client(void) : _socket(-1), _isRegistered(false), _username(""), _nickname(""), _realname(""), _hostname(""), _password(""), _userModes(""), _serverOP(false) {}
+Client::Client(int socket) : _socket(socket), _isRegistered(false), _username(""), _nickname(""), _realname(""), _hostname(""), _password(""), _userModes(""), _serverOP(false) {}
 Client::~Client(void) {}
 
 Client&	Client::operator=(const Client& dest) {
@@ -15,6 +15,7 @@ Client&	Client::operator=(const Client& dest) {
 	this->_hostname = dest._hostname;
 	this->_password = dest._password;
 	this->_userModes = dest._userModes;
+	this->_serverOP = dest._serverOP;
 	return *this;
 }
 
@@ -26,6 +27,11 @@ void	Client::sendMessage(const std::string& message) const
 
 bool	Client::isReadyToBeRegister(void) const {
 	return !this->_nickname.empty() && !this->_username.empty();
+}
+
+void	Client::delUserModes(char mode) {
+	if (this->_userModes.find(mode) != this->_userModes.npos)
+		this->_userModes.erase(std::remove(this->_userModes.begin(), this->_userModes.end(), mode));
 }
 
 /*** Setters ***/
@@ -40,14 +46,11 @@ void	Client::setUserModes(char mode) {
 	if (this->_userModes.find(mode) == this->_userModes.npos)
 		this->_userModes += mode;
 }
-void	Client::delUserModes(char mode) {
-	if (this->_userModes.find(mode) != this->_userModes.npos)
-		this->_userModes.erase(std::remove(this->_userModes.begin(), this->_userModes.end(), mode));
-}
+void	Client::setServerOP(bool value) {this->_serverOP = value;}
 
 /*** Getters ***/
 
-bool			Client::getIsRegistered(void) const {return this->_isRegistered;}
+bool				Client::getIsRegistered(void) const {return this->_isRegistered;}
 const std::string	Client::getUsername(void) const {return this->_username;}
 const std::string	Client::getNickname(void) const {return this->_nickname;}
 const std::string	Client::getRealname(void) const {return this->_realname;}
@@ -55,3 +58,4 @@ const std::string	Client::getHostname(void) const {return this->_hostname;}
 const std::string	Client::getPassword(void) const {return this->_password;}
 const std::string	Client::getPrefix(void) const {return (":" + this->getNickname() + "!" + this->getUsername() + "@" + this->getHostname());}
 const std::string	Client::getUserModes(void) const {return this->_userModes;}
+bool				Client::getServerOP(void) const {return this->_serverOP;}
