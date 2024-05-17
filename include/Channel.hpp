@@ -2,7 +2,6 @@
 
 #include "../include/Client.hpp"
 #include "../include/rpl.hpp"
-#include <algorithm>
 
 class Channel
 {
