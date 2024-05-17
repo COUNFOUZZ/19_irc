@@ -59,6 +59,7 @@ class Server {
 		void	_pass(int socket, std::vector<std::string>& arg, Client cl);
 		void	_quit(int socket, std::vector<std::string>& arg, Client cl);
 		void	_ping(int socket, std::vector<std::string>& arg, Client cl);
+		void	_pong(int socket, std::vector<std::string>& arg, Client cl);
 		void	_privmsg(int socket, std::vector<std::string>& arg, Client cl);
 		void	_join(int socket, std::vector<std::string>& arg, Client cl);
 		void	_part(int socket, std::vector<std::string>& arg, Client cl);
