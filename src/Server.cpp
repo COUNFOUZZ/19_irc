@@ -43,6 +43,7 @@ void	Server::_initCmds(void) {
 	this->_commands["PRIVMSG"] = &Server::_privmsg;
 	this->_commands["JOIN"] = &Server::_join;
 	this->_commands["PART"] = &Server::_part;
+	this->_commands["MODE"] = &Server::_mode;
 }
 
 void	Server::_initServer(void) {

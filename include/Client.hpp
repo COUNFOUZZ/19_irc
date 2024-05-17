@@ -10,18 +10,16 @@
 class Client
 {
 	private:
-		int							_socket;
-		bool						_isRegistered;
-		std::string					_username;
-		std::string					_nickname;
-		std::string					_realname;
-		std::string					_hostname;
-		std::string					_password;
-		std::string					_userModes;
-		bool						_serverOP;
-		std::vector<std::string>	_activeChannels;
-		// std::map<std::string, std::string>	_channelAndUserModes;	map for permission of the user for each channel ?
-
+		int									_socket;
+		bool								_isRegistered;
+		std::string							_username;
+		std::string							_nickname;
+		std::string							_realname;
+		std::string							_hostname;
+		std::string							_password;
+		std::string							_userModes;
+		bool								_serverOP;
+		std::vector<std::string>			_activeChannels;
 		std::vector<std::string>::iterator	_giveIteratorActiveChannel(std::string channelName);
 
 	public:
