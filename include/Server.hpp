@@ -32,6 +32,7 @@ class Server {
 		std::map<int, Client>			_mapSocketAndClients;
 		std::map<std::string, Client>	_mapNicknameAndClients;
 		std::map<std::string, Channel>	_channels;
+		std::string	_motd;
 
 		void						_portAndPasswordHandling(char* port);
 		bool						_arrIsDigit(char* nbr);

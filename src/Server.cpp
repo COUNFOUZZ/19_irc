@@ -127,6 +127,8 @@ void	Server::_welcome(int socket) {
 	if (!this->_mapSocketAndClients[socket].getIsRegistered() && !this->_mapSocketAndClients[socket].getPassword().empty() && this->_mapSocketAndClients[socket].isReadyToBeRegister()) {
 		this->_mapSocketAndClients[socket].setIsRegistered(true);
 		this->_mapSocketAndClients[socket].sendMessage(RPL_WELCOME(this->_mapSocketAndClients[socket].getNickname()));
+		_motd = "This is the message of the day start";
+		this->_mapSocketAndClients[socket].sendMessage(RPL_MOTDSTART(this->_motd));
 	}
 }
 
