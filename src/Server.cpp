@@ -44,6 +44,7 @@ void	Server::_initCmds(void) {
 	this->_commands["JOIN"] = &Server::_join;
 	this->_commands["PART"] = &Server::_part;
 	this->_commands["MODE"] = &Server::_mode;
+	this->_commands["MOTD"] = &Server::_motd;
 }
 
 void	Server::_initServer(void) {
@@ -128,6 +129,9 @@ void	Server::_welcome(int socket) {
 	if (!this->_mapSocketAndClients[socket].getIsRegistered() && !this->_mapSocketAndClients[socket].getPassword().empty() && this->_mapSocketAndClients[socket].isReadyToBeRegister()) {
 		this->_mapSocketAndClients[socket].setIsRegistered(true);
 		this->_mapSocketAndClients[socket].sendMessage(RPL_WELCOME(this->_mapSocketAndClients[socket].getNickname()));
+		_messageOfTheDay = "This is the message of the day.";
+		if (!_messageOfTheDay.empty())
+			this->_mapSocketAndClients[socket].sendMessage(RPL_MOTDSTART(this->_messageOfTheDay));
 	}
 }
 

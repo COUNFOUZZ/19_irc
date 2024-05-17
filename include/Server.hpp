@@ -32,6 +32,7 @@ class Server {
 		std::map<int, Client>			_mapSocketAndClients;
 		std::map<std::string, Client>	_mapNicknameAndClients;
 		std::map<std::string, Channel>	_channels;
+		std::string	_messageOfTheDay;
 
 		void						_portAndPasswordHandling(char* port);
 		bool						_arrIsDigit(char* nbr);
@@ -62,6 +63,7 @@ class Server {
 		void	_join(int socket, std::vector<std::string>& arg, Client cl);
 		void	_part(int socket, std::vector<std::string>& arg, Client cl);
 		void	_mode(int socket, std::vector<std::string>& arg, Client cl);
+		void	_motd(int socket, std::vector<std::string>& arg, Client cl);
 	public:
 		Server(char* port, char* password);
 		~Server(void);
