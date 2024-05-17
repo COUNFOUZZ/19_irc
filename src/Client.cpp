@@ -16,6 +16,7 @@ Client&	Client::operator=(const Client& dest) {
 	this->_password = dest._password;
 	this->_userModes = dest._userModes;
 	this->_serverOP = dest._serverOP;
+	this->_activeChannels = dest._activeChannels;
 	return *this;
 }
 
@@ -34,6 +35,37 @@ void	Client::delUserModes(char mode) {
 		this->_userModes.erase(std::remove(this->_userModes.begin(), this->_userModes.end(), mode));
 }
 
+void	Client::addActiveChannel(std::string channelName) {
+	this->_activeChannels.push_back(channelName);
+}
+
+bool	Client ::isInChannel(std::string channelName) const {
+	for (std::vector<std::string>::const_iterator it = this->_activeChannels.begin(); it != this->_activeChannels.end(); ++it) {
+		if (*it == channelName)
+			return true;
+	}
+	return false;
+}
+
+void	Client::delActiveChannel(std::string channelName) {
+	if (this->isInChannel(channelName)) {
+		std::vector<std::string>::iterator	it;
+		it = this->_giveIteratorActiveChannel(channelName);
+		this->_activeChannels.erase(it);
+	}
+}
+
+std::vector<std::string>::iterator	Client::_giveIteratorActiveChannel(std::string channelName) {
+	for (std::vector<std::string>::iterator	it = this->_activeChannels.begin(); it != this->_activeChannels.end(); ++it)
+		if (*it == channelName)
+			return it;
+	return this->_activeChannels.end();
+}
+
+size_t	Client::nbrOfActiveChannel(void) const {
+	return this->_activeChannels.size();
+}
+
 /*** Setters ***/
 
 void	Client::setIsRegistered(bool value) {this->_isRegistered = value;}
@@ -50,12 +82,13 @@ void	Client::setServerOP(bool value) {this->_serverOP = value;}
 
 /*** Getters ***/
 
-bool				Client::getIsRegistered(void) const {return this->_isRegistered;}
-const std::string	Client::getUsername(void) const {return this->_username;}
-const std::string	Client::getNickname(void) const {return this->_nickname;}
-const std::string	Client::getRealname(void) const {return this->_realname;}
-const std::string	Client::getHostname(void) const {return this->_hostname;}
-const std::string	Client::getPassword(void) const {return this->_password;}
-const std::string	Client::getPrefix(void) const {return (":" + this->getNickname() + "!" + this->getUsername() + "@" + this->getHostname());}
-const std::string	Client::getUserModes(void) const {return this->_userModes;}
-bool				Client::getServerOP(void) const {return this->_serverOP;}
+bool						Client::getIsRegistered(void) const {return this->_isRegistered;}
+const std::string			Client::getUsername(void) const {return this->_username;}
+const std::string			Client::getNickname(void) const {return this->_nickname;}
+const std::string			Client::getRealname(void) const {return this->_realname;}
+const std::string			Client::getHostname(void) const {return this->_hostname;}
+const std::string			Client::getPassword(void) const {return this->_password;}
+const std::string			Client::getPrefix(void) const {return (":" + this->getNickname() + "!" + this->getUsername() + "@" + this->getHostname());}
+const std::string			Client::getUserModes(void) const {return this->_userModes;}
+bool						Client::getServerOP(void) const {return this->_serverOP;}
+std::vector<std::string>	Client::getActiveChannels(void) const {return this->_activeChannels;}

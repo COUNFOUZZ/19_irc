@@ -6,10 +6,11 @@ Channel::Channel(std::string channelName) : _channelName(channelName), _topic(""
 Channel::~Channel(void) {}
 
 /*** Methods ***/
-void	Channel::addUser(Client client) {
+void	Channel::addUser(Client& client) {
 	if (client.getServerOP() && !this->_isInOpVector(client.getNickname()))
 		this->addOperator(client.getNickname());
 	this->_clients.push_back(client);
+	client.addActiveChannel(this->getChannelName());
 }
 
 void	Channel::broadcast(std::string message, Client cl) const {
@@ -44,10 +45,11 @@ void	Channel::addOperator(std::string nickname) {
 	this->_operators.push_back(nickname);
 }
 
-void	Channel::eraseUserFromChannel(std::string nickname) {
+void	Channel::eraseUserFromChannel(Client& client) {
 	for (std::vector<Client>::iterator it = this->_clients.begin(); it < this->_clients.end(); ++it) {
-		if (it->getNickname() == nickname) {
+		if (it->getNickname() == client.getNickname()) {
 			this->_clients.erase(it);
+			client.delActiveChannel(this->getChannelName());
 			return;
 		}
 	}

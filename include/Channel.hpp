@@ -2,8 +2,6 @@
 
 #include "../include/Client.hpp"
 #include "../include/rpl.hpp"
-#include <vector>
-#include <iterator>
 #include <algorithm>
 
 class Channel
@@ -21,10 +19,10 @@ class Channel
 		Channel(std::string channelName);
 		~Channel(void);
 
-		void	addUser(Client client);
+		void	addUser(Client& client);
 		void	clientAnnounceHimself(Client client) const;
 		void	broadcast(std::string message, Client cl) const;
-		void	eraseUserFromChannel(std::string nickname);
+		void	eraseUserFromChannel(Client& client);
 		bool	isUserIsInChannel(std::string nickname) const;
 		void	delChannelModes(char mode);
 		void	addOperator(std::string nickname);

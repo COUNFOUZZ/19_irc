@@ -15,8 +15,6 @@
 #include <fcntl.h>		// fcntl()
 #include <cstring>		// memset()
 #include <map>
-#include <vector>
-#include <iterator>
 
 extern bool g_shutdown;
 
