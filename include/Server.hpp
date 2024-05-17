@@ -50,6 +50,7 @@ class Server {
 		bool						_isValidChannel(std::string channelName) const;
 		bool						_isValidCharChannel(std::string channelName) const;
 		int							_whichPassword(std::string pass);
+		bool						_userExist(std::string nickname) const;
 
 		void	_cap(int socket, std::vector<std::string>& arg, Client cl);
 		void	_nick(int socket, std::vector<std::string>& arg, Client cl);

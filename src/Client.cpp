@@ -66,6 +66,60 @@ size_t	Client::nbrOfActiveChannel(void) const {
 	return this->_activeChannels.size();
 }
 
+/*** Channel/right ***/
+void	Client::addChannelAndRight(std::string channelName, char mode) {
+	if (channelName.empty())
+		return;
+	std::map<std::string, std::string>::iterator it = this->_channelAndRight.find(channelName);
+
+	if (it != this->_channelAndRight.end()) {
+		if (it->second.find(mode) == it->second.npos)
+			it->second.push_back(mode);
+	} else {
+		std::string	strMode;
+		if (mode)
+			strMode.push_back(mode);
+		this->_channelAndRight.insert(std::pair<std::string, std::string>(channelName, strMode));
+	}
+}
+
+void	Client::delARightFromChannelAndRight(std::string channelName, char mode) {
+	if (channelName.empty() || !mode)
+		return;
+	std::map<std::string, std::string>::iterator it = this->_channelAndRight.find(channelName);
+
+	if (it != this->_channelAndRight.end()) {
+		if (it->second.find(mode) != it->second.npos)
+			it->second.erase(it->second.find(mode), 1);
+	}
+}
+
+void	Client::delChannelAndRight(std::string channelName) {
+	if (channelName.empty())
+		return;
+	std::map<std::string, std::string>::iterator it = this->_channelAndRight.find(channelName);
+	if (it != this->_channelAndRight.end())
+		this->_channelAndRight.erase(it);
+}
+
+bool	Client::checkRightFromChannelAndRight(std::string channelName, char mode) const {
+	if (channelName.empty() || !mode)
+		return false;
+	std::map<std::string, std::string>::const_iterator it = this->_channelAndRight.find(channelName);
+	
+	if (it != this->_channelAndRight.end())
+		if (it->second.find(mode) != it->second.npos)
+			return true;
+	return false;
+}
+
+const std::string	Client::getRightFromChannel(std::string channelName) const {
+	std::map<std::string, std::string>::const_iterator it = this->_channelAndRight.find(channelName);
+	if (it != this->_channelAndRight.end())
+		return it->second;
+	return "";
+}
+
 /*** Setters ***/
 
 void	Client::setIsRegistered(bool value) {this->_isRegistered = value;}

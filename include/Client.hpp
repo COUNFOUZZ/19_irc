@@ -20,8 +20,10 @@ class Client
 		std::string							_userModes;
 		bool								_serverOP;
 		std::vector<std::string>			_activeChannels;
-		std::vector<std::string>::iterator	_giveIteratorActiveChannel(std::string channelName);
+		std::map<std::string, std::string>	_channelAndRight;
 
+		std::vector<std::string>::iterator	_giveIteratorActiveChannel(std::string channelName);
+	
 	public:
 		Client(void);
 		Client(int socket);
@@ -36,6 +38,13 @@ class Client
 		bool	isInChannel(std::string chanelName) const;
 		void	delActiveChannel(std::string channelName);
 		size_t	nbrOfActiveChannel(void) const;
+
+	/*** Channel/right ***/
+		void				addChannelAndRight(std::string channelName, char mode);
+		void				delARightFromChannelAndRight(std::string channelName, char mode);
+		void				delChannelAndRight(std::string channelName);
+		bool				checkRightFromChannelAndRight(std::string channelName, char mode) const;
+		const std::string	getRightFromChannel(std::string channelName) const;
 
 	/*** Setters ***/
 		void	setIsRegistered(bool value);

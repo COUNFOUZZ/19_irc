@@ -7,8 +7,12 @@ Channel::~Channel(void) {}
 
 /*** Methods ***/
 void	Channel::addUser(Client& client) {
-	if (client.getServerOP() && !this->_isInOpVector(client.getNickname()))
-		this->addOperator(client.getNickname());
+	if ((client.getServerOP() && !this->isInOpVector(client.getNickname())) || (!this->getNbrOfClient() && !this->isInOpVector(client.getNickname()))) {
+		this->_addOperator(client.getNickname());
+		client.addChannelAndRight(this->getChannelName(), 'o');
+	} else {
+		client.addChannelAndRight(this->getChannelName(), '\0');
+	}
 	this->_clients.push_back(client);
 	client.addActiveChannel(this->getChannelName());
 }
@@ -34,14 +38,14 @@ bool	Channel::isUserIsInChannel(std::string nickname) const {
 	return false;
 }
 
-bool	Channel::_isInOpVector(std::string nickname) const {
+bool	Channel::isInOpVector(std::string nickname) const {
 	for (std::vector<std::string>::const_iterator it = this->_operators.begin(); it != this->_operators.end(); ++it)
 		if (*it == nickname)
 			return true;
 	return false;
 }
 
-void	Channel::addOperator(std::string nickname) {
+void	Channel::_addOperator(std::string nickname) {
 	this->_operators.push_back(nickname);
 }
 
@@ -66,7 +70,7 @@ void				Channel::rplNameAndEnd(Client client) const {
 	std::string	users;
 
 	for (size_t i = 0; i < this->_clients.size(); ++i) {
-		if (this->_isInOpVector(this->_clients[i].getNickname()))
+		if (this->isInOpVector(this->_clients[i].getNickname()))
 			users += '@';
 		users += this->_clients[i].getNickname();
 		if (i != this->_clients.size() - 1)

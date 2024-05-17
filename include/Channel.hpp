@@ -12,7 +12,7 @@ class Channel
 		std::vector<std::string>	_operators;
 		std::string					_channelModes;
 
-		bool	_isInOpVector(std::string nickname) const;
+		void	_addOperator(std::string nickname);
 	public:
 		Channel(void);
 		Channel(std::string channelName);
@@ -24,9 +24,9 @@ class Channel
 		void	eraseUserFromChannel(Client& client);
 		bool	isUserIsInChannel(std::string nickname) const;
 		void	delChannelModes(char mode);
-		void	addOperator(std::string nickname);
 		void	printOperator(void) const;
 		void	rplNameAndEnd(Client client) const;
+		bool	isInOpVector(std::string nickname) const;
 
 	/*** Setters ***/
 		void	setChannelName(std::string channelName);

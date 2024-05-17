@@ -22,8 +22,10 @@ void	Server::_part(int socket, std::vector<std::string>& arg, Client cl) {
 	buffer.erase(buffer.size() - 1);
 	msg += buffer + "\r\n";
 	this->_channels[arg[0]].eraseUserFromChannel(this->_mapSocketAndClients[socket]);
-	if (this->_channels[arg[0]].getNbrOfClient())
+	if (this->_channels[arg[0]].getNbrOfClient()) {
 		this->_channels[arg[0]].broadcast(msg, this->_mapSocketAndClients[socket]);
-	else
+	} else {
+		this->_mapSocketAndClients[socket].delChannelAndRight(arg[0]);
 		this->_channels.erase(arg[0]);
+	}
 }

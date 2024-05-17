@@ -177,3 +177,10 @@ void	Server::_runServer(void) {
 		}
 	}
 }
+
+bool	Server::_userExist(std::string nickname) const {
+	for (std::map<int, Client>::const_iterator it = this->_mapSocketAndClients.begin(); it != this->_mapSocketAndClients.end(); ++it)
+		if (it->second.getNickname() == nickname)
+			return true;
+	return false;
+}

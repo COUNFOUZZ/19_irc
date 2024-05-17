@@ -3,7 +3,7 @@
 bool	Server::_isValidCharChannel(std::string channelName) const {
     const std::string specialChar("-_.");
 
-	channelName.erase(0);	// delete first character (# || &)
+	channelName.erase(0, 1);	// delete first character (# || &)
 	for (size_t i = 0; i < channelName.size(); ++i) {
 		bool isSpecialChar = false;
 		for (size_t j = 0; j < specialChar.size(); ++j) {
@@ -41,7 +41,6 @@ void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
 		if (this->_channels.find(channelName) == this->_channels.end()) {
 			this->_channels[channelName] = Channel(channelName);
 			this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);
-			this->_channels[channelName].addOperator(this->_mapSocketAndClients[socket].getNickname());
 			std::string rpl_msg(this->_mapSocketAndClients[socket].getPrefix() + " JOIN " + channelName + "\r\n");
 			this->_mapSocketAndClients[socket].sendMessage(rpl_msg);
 			this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(channelName));
