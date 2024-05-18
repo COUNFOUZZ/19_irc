@@ -69,7 +69,15 @@ void	Channel::printOperator(void) const {
 	std::cout << std::endl;
 }
 
-void				Channel::rplNameAndEnd(Client client) const {
+void	Channel::_refreshAllUsersList(Client client, std::string users) const {
+	for (size_t i = 0; i < this->_clients.size(); ++i) {
+		this->_clients[i].sendMessage(RPL_NAMREPLY(this->_clients[i].getNickname(), this->getChannelName(), users));
+		if (client.getNickname() == this->_clients[i].getNickname())
+			this->_clients[i].sendMessage(RPL_ENDOFNAMES(this->getChannelName(), this->_clients[i].getNickname()));
+	}
+}
+
+void	Channel::rplNameAndEnd(Client client) const {
 	std::string	users;
 
 	for (size_t i = 0; i < this->_clients.size(); ++i) {
@@ -79,8 +87,10 @@ void				Channel::rplNameAndEnd(Client client) const {
 		if (i != this->_clients.size() - 1)
 			users += " ";
 	}
-	client.sendMessage(RPL_NAMREPLY(client.getNickname(), this->getChannelName(), users));
-	client.sendMessage(RPL_ENDOFNAMES(this->getChannelName(), client.getNickname()));
+	// if (client.getServerOP() || client.checkRightFromChannelAndRight(this->getChannelName(), 'o'))
+	this->_refreshAllUsersList(client, users);
+	// client.sendMessage(RPL_NAMREPLY(client.getNickname(), this->getChannelName(), users));
+	// client.sendMessage(RPL_ENDOFNAMES(this->getChannelName(), client.getNickname()));
 }
 
 /*** Setters ***/

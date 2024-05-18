@@ -65,6 +65,7 @@ class Server {
 		void	_part(int socket, std::vector<std::string>& arg, Client cl);
 		void	_mode(int socket, std::vector<std::string>& arg, Client cl);
 		void	_motd(int socket, std::vector<std::string>& arg, Client cl);
+		void	_kick(int socket, std::vector<std::string>& arg, Client cl);
 	public:
 		Server(char* port, char* password);
 		~Server(void);

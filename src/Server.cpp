@@ -46,6 +46,7 @@ void	Server::_initCmds(void) {
 	this->_commands["PART"] = &Server::_part;
 	this->_commands["MODE"] = &Server::_mode;
 	this->_commands["MOTD"] = &Server::_motd;
+	this->_commands["KICK"] = &Server::_kick;
 }
 
 void	Server::_initServer(void) {
