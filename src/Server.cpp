@@ -130,9 +130,11 @@ void	Server::_welcome(int socket) {
 	if (!this->_mapSocketAndClients[socket].getIsRegistered() && !this->_mapSocketAndClients[socket].getPassword().empty() && this->_mapSocketAndClients[socket].isReadyToBeRegister()) {
 		this->_mapSocketAndClients[socket].setIsRegistered(true);
 		this->_mapSocketAndClients[socket].sendMessage(RPL_WELCOME(this->_mapSocketAndClients[socket].getNickname()));
-		_messageOfTheDay = "This is the message of the day.";
-		if (!_messageOfTheDay.empty())
+		this->_messageOfTheDay = "This is the message of the day.";
+		if (!this->_messageOfTheDay.empty())
 			this->_mapSocketAndClients[socket].sendMessage(RPL_MOTDSTART(this->_messageOfTheDay));
+		if (this->_mapSocketAndClients[socket].getServerOP())
+			this->_mapSocketAndClients[socket].sendMessage(RPL_YOUREOPER("all the server !"));
 	}
 }
 

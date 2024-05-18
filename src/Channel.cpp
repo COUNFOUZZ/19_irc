@@ -7,9 +7,12 @@ Channel::~Channel(void) {}
 
 /*** Methods ***/
 void	Channel::addUser(Client& client) {
-	if ((client.getServerOP() && !this->isInOpVector(client.getNickname())) || (!this->getNbrOfClient() && !this->isInOpVector(client.getNickname()))) {
+	if ((client.getServerOP() && !this->isInOpVector(client.getNickname()))
+	|| (!this->getNbrOfClient() && !this->isInOpVector(client.getNickname()))
+	|| (client.checkRightFromChannelAndRight(this->getChannelName(), 'o') && !this->isInOpVector(client.getNickname()))) {
 		this->_addOperator(client.getNickname());
-		client.addChannelAndRight(this->getChannelName(), 'o');
+		if (!client.checkRightFromChannelAndRight(this->getChannelName(), '0'))
+			client.addChannelAndRight(this->getChannelName(), 'o');
 	} else {
 		client.addChannelAndRight(this->getChannelName(), '\0');
 	}
