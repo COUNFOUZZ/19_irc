@@ -27,4 +27,9 @@ void	Server::_kick(int socket, std::vector<std::string>& arg, Client cl) {
 				reason += " ";
 		}
 	}
+	reason += "\r\n";
+	std::string	rpl_msg(this->_mapSocketAndClients[socket].getPrefix() + " KICK " + channelName + " " + userToKick + " " + reason);
+	this->_mapSocketAndClients[socket].sendMessage(rpl_msg);
+	this->_channels[channelName].delUserFromChannel(userToKick);
+	this->_channels[channelName].broadcast(rpl_msg, this->_mapSocketAndClients[socket]);
 }

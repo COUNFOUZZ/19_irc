@@ -52,7 +52,7 @@ void	Channel::_addOperator(std::string nickname) {
 	this->_operators.push_back(nickname);
 }
 
-void	Channel::eraseUserFromChannel(Client& client) {
+void	Channel::_eraseUserFromChannel(Client& client) {
 	for (std::vector<Client>::iterator it = this->_clients.begin(); it < this->_clients.end(); ++it) {
 		if (it->getNickname() == client.getNickname()) {
 			this->_clients.erase(it);
@@ -92,6 +92,16 @@ void	Channel::rplNameAndEnd(Client client) const {
 	else {
 		client.sendMessage(RPL_NAMREPLY(client.getNickname(), this->getChannelName(), users));
 		client.sendMessage(RPL_ENDOFNAMES(this->getChannelName(), client.getNickname()));
+	}
+}
+
+void	Channel::delUserFromChannel(std::string nickname) {
+	for (std::vector<Client>::iterator it = this->_clients.begin(); it < this->_clients.end(); ++it) {
+		if (it->getNickname() == nickname) {
+			this->_clients.erase(it);
+			it->delActiveChannel(this->getChannelName());
+			return;
+		}
 	}
 }
 

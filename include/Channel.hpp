@@ -14,6 +14,7 @@ class Channel
 
 		void	_addOperator(std::string nickname);
 		void	_refreshAllUsersList(std::string users) const;
+		void	_eraseUserFromChannel(Client& client);
 	public:
 		Channel(void);
 		Channel(std::string channelName);
@@ -22,12 +23,12 @@ class Channel
 		void	addUser(Client& client);
 		void	clientAnnounceHimself(Client client) const;
 		void	broadcast(std::string message, Client cl) const;
-		void	eraseUserFromChannel(Client& client);
 		bool	isUserIsInChannel(std::string nickname) const;
 		void	delChannelModes(char mode);
 		void	printOperator(void) const;
 		void	rplNameAndEnd(Client client) const;
 		bool	isInOpVector(std::string nickname) const;
+		void	delUserFromChannel(std::string nickname);
 
 	/*** Setters ***/
 		void	setChannelName(std::string channelName);
