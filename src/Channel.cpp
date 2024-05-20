@@ -69,11 +69,10 @@ void	Channel::printOperator(void) const {
 	std::cout << std::endl;
 }
 
-void	Channel::_refreshAllUsersList(Client client, std::string users) const {
+void	Channel::_refreshAllUsersList(std::string users) const {
 	for (size_t i = 0; i < this->_clients.size(); ++i) {
 		this->_clients[i].sendMessage(RPL_NAMREPLY(this->_clients[i].getNickname(), this->getChannelName(), users));
-		if (client.getNickname() == this->_clients[i].getNickname())
-			this->_clients[i].sendMessage(RPL_ENDOFNAMES(this->getChannelName(), this->_clients[i].getNickname()));
+		// this->_clients[i].sendMessage(RPL_ENDOFNAMES(this->getChannelName(), this->_clients[i].getNickname())); // in comment because if it's uncomment, when an op come in the chan all user see the message who is in the channel.
 	}
 }
 
@@ -87,10 +86,13 @@ void	Channel::rplNameAndEnd(Client client) const {
 		if (i != this->_clients.size() - 1)
 			users += " ";
 	}
-	// if (client.getServerOP() || client.checkRightFromChannelAndRight(this->getChannelName(), 'o'))
-	this->_refreshAllUsersList(client, users);
-	// client.sendMessage(RPL_NAMREPLY(client.getNickname(), this->getChannelName(), users));
-	// client.sendMessage(RPL_ENDOFNAMES(this->getChannelName(), client.getNickname()));
+	if (client.checkRightFromChannelAndRight(this->getChannelName(), 'o')) {
+		this->_refreshAllUsersList(users);
+	}
+	else {
+		client.sendMessage(RPL_NAMREPLY(client.getNickname(), this->getChannelName(), users));
+		client.sendMessage(RPL_ENDOFNAMES(this->getChannelName(), client.getNickname()));
+	}
 }
 
 /*** Setters ***/

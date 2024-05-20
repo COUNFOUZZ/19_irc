@@ -13,7 +13,7 @@ class Channel
 		std::string					_channelModes;
 
 		void	_addOperator(std::string nickname);
-		void	_refreshAllUsersList(Client client, std::string users) const;
+		void	_refreshAllUsersList(std::string users) const;
 	public:
 		Channel(void);
 		Channel(std::string channelName);
