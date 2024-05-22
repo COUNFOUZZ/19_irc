@@ -7,7 +7,7 @@ void	Server::_user(int socket, std::vector<std::string>& arg, Client cl) {
 	// 	return;
 	// }
 	if (arg.size() != 4) {
-		this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("Invalid USER command !"));
+		this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "USER"));
 		return;
 	}
 	this->_mapSocketAndClients[socket].setUsername(arg[0]);

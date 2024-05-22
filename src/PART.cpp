@@ -3,7 +3,7 @@
 void	Server::_part(int socket, std::vector<std::string>& arg, Client cl) {
 	static_cast<void>(cl);
 	if (arg.size() < 1){
-		this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("PART"));
+		this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "PART"));
         return;
 	}
 	if (this->_channels.find(arg[0]) == this->_channels.end()) {

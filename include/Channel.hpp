@@ -31,6 +31,7 @@ class Channel
 		void	rplNameAndEnd(Client client) const;
 		bool	isInOpVector(std::string nickname) const;
 		void	delUserFromChannel(std::string nickname);
+		bool	checkAMode(char mode) const;
 
 	/*** Setters ***/
 		void	setChannelName(std::string channelName);

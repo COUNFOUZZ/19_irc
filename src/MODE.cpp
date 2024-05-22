@@ -2,8 +2,8 @@
 
 void	Server::_mode(int socket, std::vector<std::string>& arg, Client cl) {
 	static_cast<void>(cl);
-	if (arg.size() < 1)
-		return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("MODE"));
+	if (arg.size() < 2)
+		return;
 
 	std::string	channelName;
 	channelName = arg[0];
@@ -47,7 +47,7 @@ void	Server::_mode(int socket, std::vector<std::string>& arg, Client cl) {
 		case 'k': {
 			if (right[0] == '+') {
 				if (arg.size() != 3)
-					return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("MODE"));
+					return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "MODE"));
 				std::string	password(arg[2]);
 				if (password.empty())
 					return this->_mapSocketAndClients[socket].sendMessage(ERR_KEYSET(this->_mapSocketAndClients[socket].getNickname(), channelName, "If you set a password, it can't be empty."));
@@ -60,7 +60,7 @@ void	Server::_mode(int socket, std::vector<std::string>& arg, Client cl) {
 			break;
 		} case 'o': {
 			if (arg.size() < 3)
-                return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("MODE"));
+                return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "MODE"));
 			user = arg[2];
 			if (!this->_userExist(user))
 				return this->_mapSocketAndClients[socket].sendMessage(ERR_USERNOTINCHANNEL(this->_mapSocketAndClients[socket].getNickname(), channelName, user));
@@ -75,7 +75,7 @@ void	Server::_mode(int socket, std::vector<std::string>& arg, Client cl) {
 		} case 'l': {
 			if (right[0] == '+') {
 				if (arg.size() != 3)
-					return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("MODE"));
+					return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "MODE"));
 				for (size_t i = 0; i < arg[2].size(); ++i)
 					if (!isdigit(arg[2][i]))
 						return;
@@ -93,7 +93,7 @@ void	Server::_mode(int socket, std::vector<std::string>& arg, Client cl) {
 				this->_channels[channelName].setChannelModes('l');
 			} else {
 				if (arg.size() != 2)
-					return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("MODE"));
+					return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "MODE"));
 				this->_channels[channelName].setLimit(0);
 				this->_channels[channelName].delChannelModes('l');
 			}

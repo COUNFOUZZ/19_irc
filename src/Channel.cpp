@@ -114,6 +114,13 @@ void	Channel::delChannelModes(char mode) {
 		this->_channelModes.erase(std::remove(this->_channelModes.begin(), this->_channelModes.end(), mode));
 }
 
+bool	Channel::checkAMode(char mode) const {
+	for (size_t i = 0; i < this->_channelModes.size(); ++i)
+		if (this->_channelModes[i] == mode)
+			return true;
+	return false;
+}
+
 /*** Setters ***/
 void	Channel::setChannelName(std::string channelName) {this->_channelName = channelName;}
 void	Channel::setTopic(std::string topic) {this->_topic = topic;}
