@@ -11,6 +11,7 @@
 #define	ERR_ERRONEUSNICKNAME(nickname) ("432 " + nickname + " :Erroneus nickname\r\n")
 #define	ERR_NICKNAMEINUSE(nick) ("433 " + nick + " :Nickname is already in use\r\n")
 #define ERR_USERNOTINCHANNEL(nickname, channel, userTarget) (std::string(":") + SERVER_NAME + " 441 " + nickname + " " + channel + " :" + userTarget + " are not on that channel\r\n")
+#define ERR_USERNOTINCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 441 " + nickname + " " + channel + " :You are not on that channel\r\n")
 #define ERR_NOTONCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 442 " + nickname + " " + channel + " :You are not on that channel\r\n")
 #define ERR_NEEDMOREPARAMS(nickname, command) (std::string(":") + SERVER_NAME + " 461 " + nickname + " " + command + " :Not enough parameters\r\n")
 #define ERR_ALREADYREGISTERED(reason) (std::string("462 :") + reason + "\r\n")
@@ -21,3 +22,4 @@
 #define ERR_BADCHANNELKEY(nickname, channel) (std::string(":") + SERVER_NAME + " 475 " + nickname + " " + channel + " :Wrong channel password.\r\n")
 #define ERR_CHANOPRIVSNEEDED(nickname, channel) (std::string(":") + SERVER_NAME + " 482 " + nickname + " :You must be an operator to run this command in " + channel + ".\r\n")
 #define ERR_UMODEUNKNOWNFLAG(nickname, reason) (std::string(":") + SERVER_NAME + " 501 " + nickname + " :" + reason + "\r\n")
+#define ERR_USERONCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 443 " + nickname + " " + channel + " :User is already on the channel.\r\n")

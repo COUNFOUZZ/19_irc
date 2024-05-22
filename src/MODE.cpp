@@ -29,13 +29,16 @@ void	Server::_mode(int socket, std::vector<std::string>& arg) {
 		return this->_mapSocketAndClients[socket].sendMessage(ERR_UNKNOWNMODE(this->_mapSocketAndClients[socket].getNickname(), channelName, right[1]));
 	std::string	user;
 	switch (right[1]) {
-		// case 'i':
-		// 	if (right[0] == '+') {
-			
-		// 	} else {
-
-		// 	}
-		// 	break;
+		case 'i': {
+			if (right[0] == '+') {
+				this->_channels[channelName].setInviteOnly(true);
+				this->_channels[channelName].setChannelModes('i');
+			} else {
+				this->_channels[channelName].setInviteOnly(false);
+				this->_channels[channelName].delChannelModes('i');
+			}
+			break;
+		}
 		// case 't':
 		// 	if (right[0] == '+') {
 
