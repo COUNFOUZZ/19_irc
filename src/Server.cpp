@@ -47,6 +47,7 @@ void	Server::_initCmds(void) {
 	this->_commands["MODE"] = &Server::_mode;
 	this->_commands["MOTD"] = &Server::_motd;
 	this->_commands["KICK"] = &Server::_kick;
+	this->_commands["INVITE"] = &Server::_invite;
 	this->_commands["TOPIC"] = &Server::_topic;
 }
 
@@ -96,7 +97,6 @@ int Server::_acceptClient(void) {
 		std::cerr << "Can't accept client!" << std::endl;
 	FD_SET(clientSocket, &this->_masterSet);
 	this->_mapSocketAndClients.insert(std::pair<int, Client>(clientSocket, Client(clientSocket)));
-	this->_mapNicknameAndClients.insert(std::pair<std::string, Client>(this->_mapSocketAndClients[clientSocket].getNickname(), this->_mapSocketAndClients[clientSocket]));
 	return (clientSocket);
 }
 
@@ -120,7 +120,7 @@ void	Server::_commandHandling(int socket, std::vector<std::string> commandsAndAr
 	std::string command(commandsAndArgs[0]);
 	commandsAndArgs.erase(commandsAndArgs.begin());
 	if (this->_commands.find(command) != this->_commands.end())
-		(this->*_commands[command])(socket, commandsAndArgs, this->_mapSocketAndClients[socket]);
+		(this->*_commands[command])(socket, commandsAndArgs);
 	else {
 		std::string	errorMsg(ERR_UNKNOWNCOMMAND(command, "command not found !"));
 		if (send(socket, errorMsg.c_str(), errorMsg.size(), 0) == -1)
@@ -192,4 +192,11 @@ bool	Server::_userExist(std::string nickname) const {
 		if (it->second.getNickname() == nickname)
 			return true;
 	return false;
+}
+
+std::map<int, Client>::iterator	Server::_findClientByNickname(std::string nickname) {
+	for (std::map<int, Client>::iterator it = this->_mapSocketAndClients.begin(); it != this->_mapSocketAndClients.end(); ++it)
+		if (it->second.getNickname() == nickname)
+			return it;
+	return this->_mapSocketAndClients.end();
 }

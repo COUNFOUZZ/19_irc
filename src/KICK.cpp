@@ -1,9 +1,8 @@
 #include "../include/Server.hpp"
 
-void	Server::_kick(int socket, std::vector<std::string>& arg, Client cl) {
-	static_cast<void>(cl);
+void	Server::_kick(int socket, std::vector<std::string>& arg) {
 	if (arg.size() < 2)
-		this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("KICK"));
+		this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "KICK"));
 	std::string channelName, userToKick, reason;
 
 	channelName = arg[0];

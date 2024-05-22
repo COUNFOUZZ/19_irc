@@ -10,7 +10,11 @@ class Channel
 		std::string					_topic;
 		std::vector<Client>			_clients;
 		std::vector<std::string>	_operators;
+		std::vector<std::string>	_inviteList;
 		std::string					_channelModes;
+		std::string					_password;
+		int							_limit;
+		bool						_inviteOnly;
 
 		void	_addOperator(std::string nickname);
 		void	_refreshAllUsersList(std::string users) const;
@@ -29,16 +33,23 @@ class Channel
 		void	rplNameAndEnd(Client client) const;
 		bool	isInOpVector(std::string nickname) const;
 		void	delUserFromChannel(std::string nickname);
+		bool	checkAMode(char mode) const;
 
 	/*** Setters ***/
 		void	setChannelName(std::string channelName);
 		void	setTopic(std::string topic);
 		void	setChannelModes(char mode);
+		void	setPassword(std::string password);
+		void	setLimit(int limit);
+		void	setInviteOnly(bool value);
 
 	/*** Getters ***/
 		const std::string	getChannelName(void) const;
 		const std::string	getTopic(void) const;
-		std::vector<Client>	getClients(void) const;
+		std::vector<Client>	getClients(void);
 		const std::string	getChannelModes(void) const;
 		size_t				getNbrOfClient(void) const;
+		std::string			getPassword(void) const;
+		int					getLimit(void) const;
+		bool				getInviteOnly(void) const;
 };

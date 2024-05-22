@@ -26,14 +26,27 @@ bool	Server::_isValidChannel(std::string channelName) const {
 	return true;
 }
 
-void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
-	static_cast<void>(cl);
-	std::string channelName;
+void	Server::_join(int socket, std::vector<std::string>& arg) {
 	if (arg.size() < 1)
-		return (this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("JOIN")));
+		return (this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "JOIN")));
 
-	for (size_t i = 0; i < arg.size(); ++i) {
-		channelName = arg[i];
+	std::vector<std::string>	channels, passwords;
+	std::stringstream					ss(arg[0]);
+	std::string							element;
+	while (std::getline(ss, element, ','))
+		channels.push_back(element);
+	ss.clear();
+	ss.str(arg[1]);
+	while (std::getline(ss, element, ','))
+		passwords.push_back(element);
+	if (passwords.size() > channels.size())
+		return;
+	for (size_t i = 0; i < channels.size(); ++i) {
+		std::string	channelName(channels[i]);
+		std::string	password;
+		password.clear();
+		if (!passwords[i].empty())
+			password = passwords[i];
 		if (!this->_isValidChannel(channelName)) {
 			this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHCHANNEL(this->_mapSocketAndClients[socket].getNickname(), channelName));
 			continue;
@@ -46,6 +59,10 @@ void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
 			this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(channelName));
 			this->_channels[channelName].rplNameAndEnd(this->_mapSocketAndClients[socket]);
 		} else {
+			if (this->_channels[channelName].checkAMode('l') && this->_channels[channelName].getLimit() != 0 && static_cast<int>(this->_channels[channelName].getNbrOfClient()) >= this->_channels[channelName].getLimit())
+				return this->_mapSocketAndClients[socket].sendMessage(ERR_CHANNELISFULL(this->_mapSocketAndClients[socket].getNickname(), channelName));
+			if (this->_channels[channelName].checkAMode('k') && this->_channels[channelName].getPassword() != password)
+				return this->_mapSocketAndClients[socket].sendMessage(ERR_BADCHANNELKEY(this->_mapSocketAndClients[socket].getNickname(), channelName));
 			if (this->_channels[channelName].isUserIsInChannel(this->_mapSocketAndClients[socket].getNickname()))
 				return;
 			this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);

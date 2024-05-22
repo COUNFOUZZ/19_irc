@@ -10,4 +10,4 @@
 #define RPL_MOTD(motd) (std::string(":") + SERVER_NAME + " 372 " + motd + "\r\n")
 #define RPL_MOTDSTART(motd) (std::string(":") + SERVER_NAME + " 375 " + motd + "\r\n")
 #define RPL_YOUREOPER(info) (std::string(":") + SERVER_NAME + " 381 You are now operator in " + info + ".\r\n")
-
+#define RPL_INVITING(nickname, target, channel) (std::string(":") + SERVER_NAME + " 341 " + nickname + " " + target + " " + channel + "\r\n")

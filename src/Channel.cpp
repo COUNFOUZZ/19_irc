@@ -2,7 +2,7 @@
 
 
 Channel::Channel(void) : _channelName(""), _topic(""), _channelModes("") {}
-Channel::Channel(std::string channelName) : _channelName(channelName), _topic(""), _channelModes("") {}
+Channel::Channel(std::string channelName) : _channelName(channelName), _topic(""), _channelModes(""), _password(""), _limit(0), _inviteOnly(false) {}
 Channel::~Channel(void) {}
 
 /*** Methods ***/
@@ -105,9 +105,6 @@ void	Channel::delUserFromChannel(std::string nickname) {
 	}
 }
 
-/*** Setters ***/
-void	Channel::setChannelName(std::string channelName) {this->_channelName = channelName;}
-void	Channel::setTopic(std::string topic) {this->_topic = topic;}
 void	Channel::setChannelModes(char mode) {
 	if (this->_channelModes.find(mode) == this->_channelModes.npos)
 		this->_channelModes += mode;
@@ -117,9 +114,26 @@ void	Channel::delChannelModes(char mode) {
 		this->_channelModes.erase(std::remove(this->_channelModes.begin(), this->_channelModes.end(), mode));
 }
 
+bool	Channel::checkAMode(char mode) const {
+	for (size_t i = 0; i < this->_channelModes.size(); ++i)
+		if (this->_channelModes[i] == mode)
+			return true;
+	return false;
+}
+
+/*** Setters ***/
+void	Channel::setChannelName(std::string channelName) {this->_channelName = channelName;}
+void	Channel::setTopic(std::string topic) {this->_topic = topic;}
+void	Channel::setPassword(std::string password) {this->_password = password;}
+void	Channel::setLimit(int limit) {this->_limit = limit;}
+void	Channel::setInviteOnly(bool value) {this->_inviteOnly = value;}
+
 /*** Getters ***/
 const std::string	Channel::getChannelName(void) const {return this->_channelName;}
 const std::string	Channel::getTopic(void) const {return this->_topic;}
 const std::string	Channel::getChannelModes(void) const {return this->_channelModes;}
-std::vector<Client>	Channel::getClients(void) const {return this->_clients;}
+std::vector<Client>	Channel::getClients(void) {return this->_clients;}
 size_t				Channel::getNbrOfClient(void) const {return this->_clients.size();}
+std::string			Channel::getPassword(void) const {return this->_password;}
+int					Channel::getLimit(void) const {return this->_limit;}
+bool				Channel::getInviteOnly(void) const {return this->_inviteOnly;}

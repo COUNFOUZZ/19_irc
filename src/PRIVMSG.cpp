@@ -1,7 +1,6 @@
 #include "../include/Server.hpp"
 
-void	Server::_privmsg(int socket, std::vector<std::string>& arg, Client cl) {
-	static_cast<void>(cl);
+void	Server::_privmsg(int socket, std::vector<std::string>& arg) {
 	if (arg[0][0] != '#' && arg[0][0] != '&' && arg[0][0] != '!' && arg[0][0] != '+') {
 		Client	target;
 

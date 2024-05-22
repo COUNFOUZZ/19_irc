@@ -1,13 +1,12 @@
 #include "../include/Server.hpp"
 
-void	Server::_user(int socket, std::vector<std::string>& arg, Client cl) {
-	static_cast<void>(cl);
+void	Server::_user(int socket, std::vector<std::string>& arg) {
 	// if (this->_mapSocketAndClients[socket].getIsRegistered()) {
 	// 	this->_mapSocketAndClients[socket].sendMessage(ERR_ALREADYREGISTERED("USER is already registered."));
 	// 	return;
 	// }
 	if (arg.size() != 4) {
-		this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("Invalid USER command !"));
+		this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "USER"));
 		return;
 	}
 	this->_mapSocketAndClients[socket].setUsername(arg[0]);

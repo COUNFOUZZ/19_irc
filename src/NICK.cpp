@@ -42,8 +42,7 @@ bool	Server::_checkNickname(std::string& nickname, Client cl) {
 	return !this->_nickAlreadyTaken(nickname, cl) && this->_isValidNickname(nickname, cl);
 }
 
-void	Server::_nick(int socket, std::vector<std::string>& arg, Client cl) {
-	static_cast<void>(cl);
+void	Server::_nick(int socket, std::vector<std::string>& arg) {
 	if (!this->_mapSocketAndClients[socket].getPassword().empty()) {
 		if (!this->_checkNickname(arg[0], this->_mapSocketAndClients[socket]))
 			return;
