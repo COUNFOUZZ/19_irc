@@ -95,7 +95,6 @@ int Server::_acceptClient(void) {
 		std::cerr << "Can't accept client!" << std::endl;
 	FD_SET(clientSocket, &this->_masterSet);
 	this->_mapSocketAndClients.insert(std::pair<int, Client>(clientSocket, Client(clientSocket)));
-	this->_mapNicknameAndClients.insert(std::pair<std::string, Client>(this->_mapSocketAndClients[clientSocket].getNickname(), this->_mapSocketAndClients[clientSocket]));
 	return (clientSocket);
 }
 
