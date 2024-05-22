@@ -119,7 +119,7 @@ void	Server::_commandHandling(int socket, std::vector<std::string> commandsAndAr
 	std::string command(commandsAndArgs[0]);
 	commandsAndArgs.erase(commandsAndArgs.begin());
 	if (this->_commands.find(command) != this->_commands.end())
-		(this->*_commands[command])(socket, commandsAndArgs, this->_mapSocketAndClients[socket]);
+		(this->*_commands[command])(socket, commandsAndArgs);
 	else {
 		std::string	errorMsg(ERR_UNKNOWNCOMMAND(command, "command not found !"));
 		if (send(socket, errorMsg.c_str(), errorMsg.size(), 0) == -1)

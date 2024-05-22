@@ -8,8 +8,7 @@ int	Server::_whichPassword(std::string pass) {
 	return 0;
 }
 
-void	Server::_pass(int socket, std::vector<std::string>& arg, Client cl) {
-	static_cast<void>(cl);
+void	Server::_pass(int socket, std::vector<std::string>& arg) {
 	int	check = this->_whichPassword(arg[0]);
 
 	switch (check) {

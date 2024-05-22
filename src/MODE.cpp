@@ -1,7 +1,6 @@
 #include "../include/Server.hpp"
 
-void	Server::_mode(int socket, std::vector<std::string>& arg, Client cl) {
-	static_cast<void>(cl);
+void	Server::_mode(int socket, std::vector<std::string>& arg) {
 	if (arg.size() < 2)
 		return;
 

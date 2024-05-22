@@ -26,8 +26,7 @@ bool	Server::_isValidChannel(std::string channelName) const {
 	return true;
 }
 
-void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
-	static_cast<void>(cl);
+void	Server::_join(int socket, std::vector<std::string>& arg) {
 	if (arg.size() < 1)
 		return (this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "JOIN")));
 

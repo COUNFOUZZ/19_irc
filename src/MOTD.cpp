@@ -1,8 +1,6 @@
 #include "../include/Server.hpp"
 
-void	Server::_motd(int socket, std::vector<std::string>& arg, Client cl) {
-	static_cast<void>(cl);
-
+void	Server::_motd(int socket, std::vector<std::string>& arg) {
 	if (arg.size() > 0)
 		this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHSERVER(arg[1]));
 	else if (!_messageOfTheDay.empty())
