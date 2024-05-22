@@ -28,12 +28,26 @@ bool	Server::_isValidChannel(std::string channelName) const {
 
 void	Server::_join(int socket, std::vector<std::string>& arg, Client cl) {
 	static_cast<void>(cl);
-	std::string channelName;
 	if (arg.size() < 1)
 		return (this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("JOIN")));
 
-	for (size_t i = 0; i < arg.size(); ++i) {
-		channelName = arg[i];
+	std::vector<std::string>	channels, passwords;
+	std::stringstream					ss(arg[0]);
+	std::string							element;
+	while (std::getline(ss, element, ','))
+		channels.push_back(element);
+	ss.clear();
+	ss.str(arg[1]);
+	while (std::getline(ss, element, ','))
+		passwords.push_back(element);
+	if (passwords.size() > channels.size())
+		return;
+	for (size_t i = 0; i < channels.size(); ++i) {
+		std::string	channelName(channels[i]);
+		std::string	password;
+		password.clear();
+		if (!passwords[i].empty())
+			password = passwords[i];
 		if (!this->_isValidChannel(channelName)) {
 			this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHCHANNEL(this->_mapSocketAndClients[socket].getNickname(), channelName));
 			continue;
