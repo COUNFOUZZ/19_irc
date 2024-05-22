@@ -15,6 +15,8 @@
 #define ERR_NEEDMOREPARAMS(reason) (std::string("461 :") + reason + "\r\n")
 #define ERR_ALREADYREGISTERED(reason) (std::string("462 :") + reason + "\r\n")
 #define ERR_PASSWDMISMATCH(nickname) (std::string(":") + SERVER_NAME + " 464 " + nickname + SERVER_NAME + " :Password incorrect\r\n")
+#define ERR_KEYSET(nickname, channel, reason) (std::string(":") + SERVER_NAME + " 467 " + nickname + " " + channel + " :" + reason + "\r\n")
+#define ERR_CHANNELISFULL(nickname, channel) (std::string(":") + SERVER_NAME + " 471 " + nickname + " :Channel " + channel + " is full.\r\n")
 #define ERR_UNKNOWNMODE(nickname, channel, char) (std::string(":") + SERVER_NAME + " 472 " + nickname + " " + channel + " :" + "\"" + char + "\"" + " is an unknown mode.\r\n")
 #define ERR_CHANOPRIVSNEEDED(nickname, channel) (std::string(":") + SERVER_NAME + " 482 " + nickname + " :You must be an operator to run this command in " + channel + ".\r\n")
 #define ERR_UMODEUNKNOWNFLAG(nickname, reason) (std::string(":") + SERVER_NAME + " 501 " + nickname + " :" + reason + "\r\n")

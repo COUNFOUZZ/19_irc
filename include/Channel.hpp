@@ -12,6 +12,7 @@ class Channel
 		std::vector<std::string>	_operators;
 		std::string					_channelModes;
 		std::string					_password;
+		int							_limit;
 
 		void	_addOperator(std::string nickname);
 		void	_refreshAllUsersList(std::string users) const;
@@ -36,6 +37,7 @@ class Channel
 		void	setTopic(std::string topic);
 		void	setChannelModes(char mode);
 		void	setPassword(std::string password);
+		void	setLimit(int limit);
 
 	/*** Getters ***/
 		const std::string	getChannelName(void) const;
@@ -44,4 +46,5 @@ class Channel
 		const std::string	getChannelModes(void) const;
 		size_t				getNbrOfClient(void) const;
 		std::string			getPassword(void) const;
+		int					getLimit(void) const;
 };

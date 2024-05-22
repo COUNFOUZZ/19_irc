@@ -46,7 +46,7 @@
 
 void	Server::_mode(int socket, std::vector<std::string>& arg, Client cl) {
 	static_cast<void>(cl);
-	if (arg.size() < 2)
+	if (arg.size() < 1)
 		return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("MODE"));
 
 	std::string	channelName;
@@ -88,33 +88,60 @@ void	Server::_mode(int socket, std::vector<std::string>& arg, Client cl) {
 				
 		// 	}
 		// 	break;
-		// case 'k':
-		// 	if (right[0] == '+') {
-
-		// 	} else {
-				
-		// 	}
-		// 	break;
-		case 'o':
+		case 'k': {
+			if (right[0] == '+') {
+				if (arg.size() != 3)
+					return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("MODE"));
+				std::string	password(arg[2]);
+				if (password.empty())
+					return this->_mapSocketAndClients[socket].sendMessage(ERR_KEYSET(this->_mapSocketAndClients[socket].getNickname(), channelName, "If you set a password, it can't be empty."));
+				this->_channels[channelName].setPassword(password);
+				this->_channels[channelName].setChannelModes('k');
+			} else {
+				this->_channels[channelName].setPassword("");
+				this->_channels[channelName].delChannelModes('k');
+			}
+			break;
+		} case 'o': {
 			if (arg.size() < 3)
                 return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("MODE"));
 			user = arg[2];
 			if (!this->_userExist(user))
 				return this->_mapSocketAndClients[socket].sendMessage(ERR_USERNOTINCHANNEL(this->_mapSocketAndClients[socket].getNickname(), channelName, user));
-			std::map<int, Client>::iterator	it = this->_findClientByNickname(user);
+			std::map<int, Client>::iterator	it_user(this->_findClientByNickname(user));
 			if (right[0] == '+') {
-				it->second.addChannelAndRight(channelName, right[1]);
-				it->second.sendMessage(RPL_YOUREOPER(channelName));
+				it_user->second.addChannelAndRight(channelName, right[1]);
+				it_user->second.sendMessage(RPL_YOUREOPER(channelName));
 			} else {
-				it->second.delARightFromChannelAndRight(channelName, right[1]);
+				it_user->second.delARightFromChannelAndRight(channelName, right[1]);
 			}
 			break;
-		// case 'l':
-		// 	if (right[0] == '+') {
+		} case 'l': {
+			if (right[0] == '+') {
+				if (arg.size() != 3)
+					return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("MODE"));
+				for (size_t i = 0; i < arg[2].size(); ++i)
+					if (!isdigit(arg[2][i]))
+						return;
+				std::stringstream	ss(arg[2]);
+				int					limit;
 
-		// 	} else {
-				
-		// 	}
-		// 	break;
+				ss >> limit;
+				if (ss.fail())
+					throw std::runtime_error("in mode, stringstream failed.");
+				if (limit > 1000) {
+					std::cerr << "server cannot limit channel up to 1000 users." << std::endl;
+					return;
+				}
+				this->_channels[channelName].setLimit(limit);
+				this->_channels[channelName].setChannelModes('l');
+			} else {
+				if (arg.size() != 2)
+					return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS("MODE"));
+				this->_channels[channelName].setLimit(0);
+				this->_channels[channelName].delChannelModes('l');
+			}
+			break;
+		}
 	}
 }

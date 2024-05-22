@@ -2,7 +2,7 @@
 
 
 Channel::Channel(void) : _channelName(""), _topic(""), _channelModes("") {}
-Channel::Channel(std::string channelName) : _channelName(channelName), _topic(""), _channelModes(""), _password("") {}
+Channel::Channel(std::string channelName) : _channelName(channelName), _topic(""), _channelModes(""), _password(""), _limit(0) {}
 Channel::~Channel(void) {}
 
 /*** Methods ***/
@@ -118,6 +118,7 @@ void	Channel::delChannelModes(char mode) {
 void	Channel::setChannelName(std::string channelName) {this->_channelName = channelName;}
 void	Channel::setTopic(std::string topic) {this->_topic = topic;}
 void	Channel::setPassword(std::string password) {this->_password = password;}
+void	Channel::setLimit(int limit) {this->_limit = limit;}
 
 /*** Getters ***/
 const std::string	Channel::getChannelName(void) const {return this->_channelName;}
@@ -126,3 +127,4 @@ const std::string	Channel::getChannelModes(void) const {return this->_channelMod
 std::vector<Client>	Channel::getClients(void) {return this->_clients;}
 size_t				Channel::getNbrOfClient(void) const {return this->_clients.size();}
 std::string			Channel::getPassword(void) const {return this->_password;}
+int					Channel::getLimit(void) const {return this->_limit;}
