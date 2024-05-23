@@ -43,7 +43,6 @@ bool	Server::_checkNickname(std::string& nickname, Client cl) {
 }
 
 void	Server::_changeNickFromAllActiveChannel(Client cl, const std::string newNick) {
-	(void)newNick;
 	std::vector<std::string>	channelName;
 
 	channelName = cl.getAllChanWithRight();
