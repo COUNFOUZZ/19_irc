@@ -27,7 +27,6 @@ void	Server::_mode(int socket, std::vector<std::string>& arg) {
 		return this->_mapSocketAndClients[socket].sendMessage(ERR_UNKNOWNMODE(this->_mapSocketAndClients[socket].getNickname(), channelName, right[0]));
 	if (right[1] != 'i' && right[1] != 't' && right[1] != 'k' && right[1] != 'o' && right[1] != 'l')
 		return this->_mapSocketAndClients[socket].sendMessage(ERR_UNKNOWNMODE(this->_mapSocketAndClients[socket].getNickname(), channelName, right[1]));
-	std::string	user;
 	switch (right[1]) {
 		case 'i': {
 			if (right[0] == '+') {
@@ -67,15 +66,20 @@ void	Server::_mode(int socket, std::vector<std::string>& arg) {
 		} case 'o': {
 			if (arg.size() < 3)
                 return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "MODE"));
-			user = arg[2];
+			std::string	channelName(arg[0]);
+			std::string	user(arg[2]);
 			if (!this->_userExist(user))
 				return this->_mapSocketAndClients[socket].sendMessage(ERR_USERNOTINCHANNEL(this->_mapSocketAndClients[socket].getNickname(), channelName, user));
+			if (this->_channels.find(channelName) == this->_channels.end())
+				return this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHCHANNEL(this->_mapSocketAndClients[socket].getNickname(), channelName));
 			std::map<int, Client>::iterator	it_user(this->_findClientByNickname(user));
 			if (right[0] == '+') {
 				it_user->second.addChannelAndRight(channelName, right[1]);
 				it_user->second.sendMessage(RPL_YOUREOPER(channelName));
 			} else {
 				it_user->second.delARightFromChannelAndRight(channelName, right[1]);
+				this->_channels[channelName].delOperator(it_user->second.getNickname());
+				this->_channels[channelName].rplNameAndEnd(this->_mapSocketAndClients[socket]);
 			}
 			break;
 		} case 'l': {
