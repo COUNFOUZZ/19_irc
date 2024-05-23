@@ -1,11 +1,13 @@
 #include "../include/Server.hpp"
 
 void	Server::_mode(int socket, std::vector<std::string>& arg) {
-	if (arg.size() < 2)
+	if (arg.size() < 1)
 		return;
 
 	std::string	channelName;
 	channelName = arg[0];
+	if (arg.size() == 1)
+		return this->_mapSocketAndClients[socket].sendMessage(RPL_CHANNELMODEIS(this->_mapSocketAndClients[socket].getNickname(), channelName, this->_channels[channelName].getChannelModes()));
 	if (this->_channels.find(channelName) == this->_channels.end())
 		return this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHCHANNEL(this->_mapSocketAndClients[socket].getNickname(), channelName));
 
