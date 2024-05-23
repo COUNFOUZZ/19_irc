@@ -66,7 +66,6 @@ void	Server::_mode(int socket, std::vector<std::string>& arg) {
 		} case 'o': {
 			if (arg.size() < 3)
                 return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "MODE"));
-			std::string	channelName(arg[0]);
 			std::string	user(arg[2]);
 			if (!this->_userExist(user))
 				return this->_mapSocketAndClients[socket].sendMessage(ERR_USERNOTINCHANNEL(this->_mapSocketAndClients[socket].getNickname(), channelName, user));

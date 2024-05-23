@@ -21,5 +21,5 @@
 #define ERR_UNKNOWNMODE(nickname, channel, char) (std::string(":") + SERVER_NAME + " 472 " + nickname + " " + channel + " :" + "\"" + char + "\"" + " is an unknown mode.\r\n")
 #define ERR_INVITEONLYCHAN(nickname, channel) (std::string(":") + SERVER_NAME + " 473 " + nickname + " " + channel + " :Cannot join channel (+i).\r\n")
 #define ERR_BADCHANNELKEY(nickname, channel) (std::string(":") + SERVER_NAME + " 475 " + nickname + " " + channel + " :Wrong channel password.\r\n")
-#define ERR_CHANOPRIVSNEEDED(nickname, channel) (std::string(":") + SERVER_NAME + " 482 " + nickname + " :You must be an operator to run this command in " + channel + ".\r\n")
+#define ERR_CHANOPRIVSNEEDED(nickname, channel) (std::string("482 ") + nickname + " " + channel + " :You are not a channel operator.\r\n")
 #define ERR_UMODEUNKNOWNFLAG(nickname, reason) (std::string(":") + SERVER_NAME + " 501 " + nickname + " :" + reason + "\r\n")
