@@ -45,10 +45,8 @@ void	Server::_mode(int socket, std::vector<std::string>& arg) {
 		}
 		case 't': {
 			if (right[0] == '+') {
-				
 				this->_channels[channelName].setChannelModes('t');
 			} else {
-				
 				this->_channels[channelName].delChannelModes('t');
 			}
 			break;
