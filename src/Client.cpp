@@ -35,12 +35,12 @@ void	Client::delUserModes(char mode) {
 		this->_userModes.erase(std::remove(this->_userModes.begin(), this->_userModes.end(), mode));
 }
 
-void Client::addActiveChannel(std::string channelName) {
+void Client::addActiveChannel(const std::string channelName) {
 	if (!channelName.empty())
 		this->_activeChannels.push_back(channelName);
 }
 
-bool Client::isInChannel(std::string channelName) const {
+bool Client::isInChannel(const std::string channelName) const {
 	if (channelName.empty() || this->_activeChannels.empty())
 		return false;
 	for (std::vector<std::string>::const_iterator it = this->_activeChannels.begin(); it != this->_activeChannels.end(); ++it)
@@ -49,7 +49,7 @@ bool Client::isInChannel(std::string channelName) const {
 	return false;
 }
 
-void Client::delActiveChannel(std::string channelName) {
+void Client::delActiveChannel(const std::string channelName) {
 	if (!channelName.empty() && this->isInChannel(channelName)) {
 		std::vector<std::string>::iterator it = this->_giveIteratorActiveChannel(channelName);
 		if (it != this->_activeChannels.end())

@@ -34,9 +34,9 @@ class Client
 		void	sendMessage(const std::string& message) const;
 		bool	isReadyToBeRegister(void) const;
 		void	delUserModes(char mode);
-		void	addActiveChannel(std::string channelName);
-		bool	isInChannel(std::string chanelName) const;
-		void	delActiveChannel(std::string channelName);
+		void	addActiveChannel(const std::string channelName);
+		bool	isInChannel(const std::string chanelName) const;
+		void	delActiveChannel(const std::string channelName);
 		size_t	nbrOfActiveChannel(void) const;
 
 	/*** Channel/right ***/
