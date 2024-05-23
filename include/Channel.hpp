@@ -34,6 +34,9 @@ class Channel
 		bool	isInOpVector(std::string nickname) const;
 		void	delUserFromChannel(std::string nickname);
 		bool	checkAMode(char mode) const;
+		void	addNicknameInInviteList(std::string nickname);
+		void	clearInviteList(void);
+		bool	checkIsInvited(std::string nickname) const;
 
 	/*** Setters ***/
 		void	setChannelName(std::string channelName);
@@ -51,5 +54,5 @@ class Channel
 		size_t				getNbrOfClient(void) const;
 		std::string			getPassword(void) const;
 		int					getLimit(void) const;
-		bool				getInviteOnly(void) const;
+		size_t				getNbrInvited(void) const;
 };

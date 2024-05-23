@@ -67,7 +67,7 @@ class Server {
 		void	_motd(int socket, std::vector<std::string>& arg);
 		void	_kick(int socket, std::vector<std::string>& arg);
 		void	_invite(int socket, std::vector<std::string>& arg);
-		void	_topic(int socket, std::vector<std::string>& arg, Client cl);
+		void	_topic(int socket, std::vector<std::string>& arg);
 	public:
 		Server(char* port, char* password);
 		~Server(void);

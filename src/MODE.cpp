@@ -31,22 +31,28 @@ void	Server::_mode(int socket, std::vector<std::string>& arg) {
 	switch (right[1]) {
 		case 'i': {
 			if (right[0] == '+') {
+				if (this->_channels[channelName].getNbrInvited())
+					this->_channels[channelName].clearInviteList();
 				this->_channels[channelName].setInviteOnly(true);
 				this->_channels[channelName].setChannelModes('i');
 			} else {
+				if (this->_channels[channelName].getNbrInvited())
+					this->_channels[channelName].clearInviteList();
 				this->_channels[channelName].setInviteOnly(false);
 				this->_channels[channelName].delChannelModes('i');
 			}
 			break;
 		}
-		// case 't':
-		// 	if (right[0] == '+') {
-
-		// 	} else {
+		case 't': {
+			if (right[0] == '+') {
 				
-		// 	}
-		// 	break;
-		case 'k': {
+				this->_channels[channelName].setChannelModes('t');
+			} else {
+				
+				this->_channels[channelName].delChannelModes('t');
+			}
+			break;
+		} case 'k': {
 			if (right[0] == '+') {
 				if (arg.size() != 3)
 					return this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "MODE"));

@@ -1,8 +1,6 @@
 #include "../include/Server.hpp"
 
-void	Server::_topic(int socket, std::vector<std::string>& arg, Client cl) {
-	static_cast<void>(cl);
-	
+void	Server::_topic(int socket, std::vector<std::string>& arg) {	
 	std::string	username;
 	std::string	topic;
 	std::string	channelName = arg[0];

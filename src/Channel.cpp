@@ -121,6 +121,21 @@ bool	Channel::checkAMode(char mode) const {
 	return false;
 }
 
+void	Channel::addNicknameInInviteList(std::string nickname) {
+	this->_inviteList.push_back(nickname);
+}
+
+void	Channel::clearInviteList(void) {
+	this->_inviteList.clear();
+}
+
+bool	Channel::checkIsInvited(std::string nickname) const {
+	for (size_t i = 0; i < this->_inviteList.size(); ++i)
+		if (this->_inviteList[i] == nickname)
+			return true;
+	return false;
+}
+
 /*** Setters ***/
 void	Channel::setChannelName(std::string channelName) {this->_channelName = channelName;}
 void	Channel::setTopic(std::string topic) {this->_topic = topic;}
@@ -136,4 +151,4 @@ std::vector<Client>	Channel::getClients(void) {return this->_clients;}
 size_t				Channel::getNbrOfClient(void) const {return this->_clients.size();}
 std::string			Channel::getPassword(void) const {return this->_password;}
 int					Channel::getLimit(void) const {return this->_limit;}
-bool				Channel::getInviteOnly(void) const {return this->_inviteOnly;}
+size_t				Channel::getNbrInvited(void) const {return this->_inviteList.size();}

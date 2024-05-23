@@ -61,8 +61,10 @@ void	Server::_join(int socket, std::vector<std::string>& arg) {
 		} else {
 			if (this->_channels[channelName].checkAMode('l') && this->_channels[channelName].getLimit() != 0 && static_cast<int>(this->_channels[channelName].getNbrOfClient()) >= this->_channels[channelName].getLimit())
 				return this->_mapSocketAndClients[socket].sendMessage(ERR_CHANNELISFULL(this->_mapSocketAndClients[socket].getNickname(), channelName));
-			if (this->_channels[channelName].checkAMode('k') && this->_channels[channelName].getPassword() != password)
+			if (this->_channels[channelName].checkAMode('k') && this->_channels[channelName].getPassword() != password && !this->_channels[channelName].checkIsInvited(this->_mapSocketAndClients[socket].getNickname()))
 				return this->_mapSocketAndClients[socket].sendMessage(ERR_BADCHANNELKEY(this->_mapSocketAndClients[socket].getNickname(), channelName));
+			if (this->_channels[channelName].checkAMode('i') && !this->_channels[channelName].checkIsInvited(this->_mapSocketAndClients[socket].getNickname()))
+				return this->_mapSocketAndClients[socket].sendMessage(ERR_INVITEONLYCHAN(this->_mapSocketAndClients[socket].getNickname(), channelName));
 			if (this->_channels[channelName].isUserIsInChannel(this->_mapSocketAndClients[socket].getNickname()))
 				return;
 			this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);
