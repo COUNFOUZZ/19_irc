@@ -10,7 +10,7 @@ void	Channel::addUser(Client& client) {
 	if ((client.getServerOP() && !this->isInOpVector(client.getNickname()))
 	|| (!this->getNbrOfClient() && !this->isInOpVector(client.getNickname()))
 	|| (client.checkRightFromChannelAndRight(this->getChannelName(), 'o') && !this->isInOpVector(client.getNickname()))) {
-		this->_addOperator(client.getNickname());
+		this->addOperator(client.getNickname());
 		if (!client.checkRightFromChannelAndRight(this->getChannelName(), '0'))
 			client.addChannelAndRight(this->getChannelName(), 'o');
 	} else {
@@ -48,8 +48,17 @@ bool	Channel::isInOpVector(std::string nickname) const {
 	return false;
 }
 
-void	Channel::_addOperator(std::string nickname) {
-	this->_operators.push_back(nickname);
+void	Channel::addOperator(std::string nickname) {
+	if (!nickname.empty())
+		this->_operators.push_back(nickname);
+}
+
+void Channel::delOperator(std::string nickname) {
+	if (!nickname.empty()) {
+		std::vector<std::string>::iterator it = std::find(this->_operators.begin(), this->_operators.end(), nickname);
+		if (it != this->_operators.end())
+			this->_operators.erase(it);
+	}
 }
 
 void	Channel::_eraseUserFromChannel(Client& client) {
@@ -123,6 +132,14 @@ bool	Channel::checkAMode(char mode) const {
 
 void	Channel::addNicknameInInviteList(std::string nickname) {
 	this->_inviteList.push_back(nickname);
+}
+
+void	Channel::delNicknameInInviteList(std::string nickname) {
+	if (!nickname.empty()) {
+		std::vector<std::string>::iterator it = std::find(this->_inviteList.begin(), this->_inviteList.end(), nickname);
+		if (it != this->_inviteList.end())
+			this->_inviteList.erase(it);
+	}
 }
 
 void	Channel::clearInviteList(void) {

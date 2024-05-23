@@ -40,11 +40,12 @@ class Client
 		size_t	nbrOfActiveChannel(void) const;
 
 	/*** Channel/right ***/
-		void				addChannelAndRight(std::string channelName, char mode);
-		void				delARightFromChannelAndRight(std::string channelName, char mode);
-		void				delChannelAndRight(std::string channelName);
-		bool				checkRightFromChannelAndRight(std::string channelName, char mode) const;
-		const std::string	getRightFromChannel(std::string channelName) const;
+		void								addChannelAndRight(std::string channelName, char mode);
+		void								delARightFromChannelAndRight(std::string channelName, char mode);
+		void								delChannelAndRight(std::string channelName);
+		bool								checkRightFromChannelAndRight(std::string channelName, char mode) const;
+		const std::string					getRightFromChannel(std::string channelName) const;
+		std::map<std::string, std::string>	getChannelAndRight(void);
 
 	/*** Setters ***/
 		void	setIsRegistered(bool value);
@@ -67,4 +68,6 @@ class Client
 		const std::string			getUserModes(void) const;
 		bool						getServerOP(void) const;
 		std::vector<std::string>	getActiveChannels(void) const;
+		std::vector<std::string>	getAllChanWithRight(void);
+
 };

@@ -16,7 +16,6 @@ class Channel
 		int							_limit;
 		bool						_inviteOnly;
 
-		void	_addOperator(std::string nickname);
 		void	_refreshAllUsersList(std::string users) const;
 		void	_eraseUserFromChannel(Client& client);
 	public:
@@ -25,6 +24,8 @@ class Channel
 		~Channel(void);
 
 		void	addUser(Client& client);
+		void	addOperator(std::string nickname);
+		void	delOperator(std::string nickname);
 		void	clientAnnounceHimself(Client client) const;
 		void	broadcast(std::string message, Client cl) const;
 		bool	isUserIsInChannel(std::string nickname) const;
@@ -35,6 +36,7 @@ class Channel
 		void	delUserFromChannel(std::string nickname);
 		bool	checkAMode(char mode) const;
 		void	addNicknameInInviteList(std::string nickname);
+		void	delNicknameInInviteList(std::string nickname);
 		void	clearInviteList(void);
 		bool	checkIsInvited(std::string nickname) const;
 

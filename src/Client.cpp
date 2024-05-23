@@ -122,6 +122,10 @@ const std::string	Client::getRightFromChannel(std::string channelName) const {
 	return "";
 }
 
+std::map<std::string, std::string>	Client::getChannelAndRight(void) {
+	return this->_channelAndRight;
+}
+
 /*** Setters ***/
 
 void	Client::setIsRegistered(bool value) {this->_isRegistered = value;}
@@ -148,3 +152,14 @@ const std::string			Client::getPrefix(void) const {return (":" + this->getNickna
 const std::string			Client::getUserModes(void) const {return this->_userModes;}
 bool						Client::getServerOP(void) const {return this->_serverOP;}
 std::vector<std::string>	Client::getActiveChannels(void) const {return this->_activeChannels;}
+std::vector<std::string>	Client::getAllChanWithRight(void) {
+	std::vector<std::string>						channels;
+	std::map<std::string, std::string>::iterator	it;
+	it = this->_channelAndRight.begin();
+	while (it != this->_channelAndRight.end()) {
+		if (!it->first.empty())
+			channels.push_back(it->first);
+		++it;
+	}
+	return channels;
+}

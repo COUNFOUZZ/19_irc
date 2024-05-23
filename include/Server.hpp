@@ -14,7 +14,6 @@
 #include <unistd.h>		// close()
 #include <fcntl.h>		// fcntl()
 #include <cstring>		// memset()
-#include <map>
 
 extern bool g_shutdown;
 
@@ -52,6 +51,7 @@ class Server {
 		int								_whichPassword(std::string pass);
 		bool							_userExist(std::string nickname) const;
 		std::map<int, Client>::iterator	_findClientByNickname(std::string nickname);
+		void							_changeNickFromAllActiveChannel(Client cl, const std::string newNick);
 
 		void	_cap(int socket, std::vector<std::string>& arg);
 		void	_nick(int socket, std::vector<std::string>& arg);
