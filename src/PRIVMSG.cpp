@@ -11,7 +11,7 @@ void	Server::_privmsg(int socket, std::vector<std::string>& arg) {
 			}
 		}
 		if (!target.getIsRegistered()) {
-			this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHNICK(arg[0]));
+			this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHNICK(arg[0], ""));
 			return;
 		}
 			std::string	msg(this->_mapSocketAndClients[socket].getPrefix() + " PRIVMSG " + target.getNickname() + " ");
