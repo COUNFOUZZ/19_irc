@@ -22,7 +22,8 @@ void	Server::_topic(int socket, std::vector<std::string>& arg) {
 		if (i != arg.size() - 1)
 			topic += " ";
 	}
-	topic.erase(0,1);
+	if (topic[0] == ':')
+		topic.erase(0,1);
 	std::string	rpl_msg(this->_mapSocketAndClients[socket].getPrefix() + " TOPIC " + channelName + " :" + topic + "\r\n");
 
 	this->_channels[channelName].setTopic(topic);
