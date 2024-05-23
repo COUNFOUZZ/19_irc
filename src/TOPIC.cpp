@@ -11,7 +11,7 @@ void	Server::_topic(int socket, std::vector<std::string>& arg) {
 		if (!this->_channels[channelName].getTopic().empty())
 			return this->_mapSocketAndClients[socket].sendMessage(RPL_TOPIC(this->_mapSocketAndClients[socket].getNickname(), channelName, this->_channels[channelName].getTopic()));
 		else
-			return this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(channelName));
+			return this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(this->_mapSocketAndClients[socket].getNickname(), channelName));
 	}
 	if (this->_channels[channelName].checkAMode('t') && !this->_channels[channelName].isInOpVector(this->_mapSocketAndClients[socket].getNickname()))
 		return this->_mapSocketAndClients[socket].sendMessage(ERR_CHANOPRIVSNEEDED(this->_mapSocketAndClients[socket].getNickname(), channelName));

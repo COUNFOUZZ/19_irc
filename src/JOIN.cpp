@@ -56,7 +56,7 @@ void	Server::_join(int socket, std::vector<std::string>& arg) {
 			this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);
 			std::string rpl_msg(this->_mapSocketAndClients[socket].getPrefix() + " JOIN " + channelName + "\r\n");
 			this->_mapSocketAndClients[socket].sendMessage(rpl_msg);
-			this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(channelName));
+			this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(this->_mapSocketAndClients[socket].getNickname(), channelName));
 			this->_channels[channelName].rplNameAndEnd(this->_mapSocketAndClients[socket]);
 		} else {
 			if (this->_channels[channelName].checkAMode('l') && this->_channels[channelName].getLimit() != 0 && static_cast<int>(this->_channels[channelName].getNbrOfClient()) >= this->_channels[channelName].getLimit())
@@ -69,7 +69,7 @@ void	Server::_join(int socket, std::vector<std::string>& arg) {
 				return;
 			this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);
 			if (this->_channels[channelName].getTopic().empty())
-				this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(channelName));
+				this->_mapSocketAndClients[socket].sendMessage(RPL_NOTOPIC(this->_mapSocketAndClients[socket].getNickname(), channelName));
 			else
 				this->_mapSocketAndClients[socket].sendMessage(RPL_TOPIC(this->_mapSocketAndClients[socket].getNickname(), channelName, this->_channels[channelName].getTopic()));
 			this->_channels[channelName].printOperator();
