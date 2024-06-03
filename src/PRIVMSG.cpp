@@ -2,6 +2,10 @@
 
 void	Server::_privmsg(int socket, std::vector<std::string>& arg) {
 	if (arg[0][0] != '#' && arg[0][0] != '&' && arg[0][0] != '!' && arg[0][0] != '+') {
+		if (this->_channels.find(arg[0]) == this->_channels.end()) {
+			this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHCHANNEL(this->_mapSocketAndClients[socket].getNickname(), arg[0]));
+			return;
+		}
 		Client	target;
 
 		for (size_t i = 0; i < this->_mapSocketAndClients.size(); ++i) {
