@@ -200,3 +200,12 @@ std::map<int, Client>::iterator	Server::_findClientByNickname(std::string nickna
 			return it;
 	return this->_mapSocketAndClients.end();
 }
+
+Client	Server::_getClient(std::string nickname) {
+
+	for (std::map<int, Client>::iterator it = this->_mapSocketAndClients.begin(); it != this->_mapSocketAndClients.end(); ++it) {
+		if (it->second.getNickname() == nickname)
+			return it->second;
+	}
+	return NULL;
+}

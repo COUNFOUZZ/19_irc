@@ -61,7 +61,7 @@ void Channel::delOperator(std::string nickname) {
 	}
 }
 
-void	Channel::_eraseUserFromChannel(Client& client) {
+void	Channel::eraseUserFromChannel(Client& client) {
 	for (std::vector<Client>::iterator it = this->_clients.begin(); it < this->_clients.end(); ++it) {
 		if (it->getNickname() == client.getNickname()) {
 			this->_clients.erase(it);
@@ -108,7 +108,7 @@ void	Channel::delUserFromChannel(std::string nickname) {
 	for (std::vector<Client>::iterator it = this->_clients.begin(); it < this->_clients.end(); ++it) {
 		if (it->getNickname() == nickname) {
 			this->_clients.erase(it);
-			it->delActiveChannel(this->getChannelName());
+			// it->delActiveChannel(this->getChannelName());
 			return;
 		}
 	}

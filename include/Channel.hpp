@@ -17,12 +17,12 @@ class Channel
 		bool						_inviteOnly;
 
 		void	_refreshAllUsersList(std::string users) const;
-		void	_eraseUserFromChannel(Client& client);
 	public:
 		Channel(void);
 		Channel(std::string channelName);
 		~Channel(void);
 
+		void	eraseUserFromChannel(Client& client);
 		void	addUser(Client& client);
 		void	addOperator(std::string nickname);
 		void	delOperator(std::string nickname);
