@@ -2,8 +2,8 @@
 
 void	Server::_privmsg(int socket, std::vector<std::string>& arg) {
 	if (arg[0][0] != '#' && arg[0][0] != '&' && arg[0][0] != '!' && arg[0][0] != '+') {
-		if (this->_channels.find(arg[0]) == this->_channels.end()) {
-			this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHCHANNEL(this->_mapSocketAndClients[socket].getNickname(), arg[0]));
+		if (!this->_userExist(arg[0])) {
+			this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHNICK(this->_mapSocketAndClients[socket].getNickname(), ""));
 			return;
 		}
 		Client	target;
@@ -26,8 +26,11 @@ void	Server::_privmsg(int socket, std::vector<std::string>& arg) {
 			buffer.erase(buffer.size() - 1);
 			msg += buffer + "\r\n";
 			target.sendMessage(msg);
-			this->_mapSocketAndClients[socket].sendMessage(msg);
 	} else {
+		if (this->_channels.find(arg[0]) == this->_channels.end()) {
+			this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHCHANNEL(this->_mapSocketAndClients[socket].getNickname(), arg[0]));
+			return;
+		}
 		Channel				target;
 
 		for (std::map<std::string, Channel>::iterator	it = this->_channels.begin(); it != this->_channels.end(); ++it) {
