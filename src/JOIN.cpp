@@ -40,21 +40,24 @@ void	Server::_join(int socket, std::vector<std::string>& arg) {
 	while (std::getline(ss, element, ','))
 		channels.push_back(element);
 	ss.clear();
+	if (arg.size() == 2) {
 	ss.str(arg[1]);
 	while (std::getline(ss, element, ','))
 		passwords.push_back(element);
 	if (passwords.size() > channels.size())
 		return;
+	}
 	for (size_t i = 0; i < channels.size(); ++i) {
 		std::string	channelName(channels[i]);
 		std::string	password;
 		password.clear();
-		if (!passwords[i].empty())
+		if (password.size() && !passwords[i].empty())
 			password = passwords[i];
 		if (!this->_isValidChannel(channelName)) {
 			this->_mapSocketAndClients[socket].sendMessage(ERR_NOSUCHCHANNEL(this->_mapSocketAndClients[socket].getNickname(), channelName));
 			continue;
 		}
+
 		if (this->_channels.find(channelName) == this->_channels.end()) {
 			this->_channels[channelName] = Channel(channelName);
 			this->_channels[channelName].addUser(this->_mapSocketAndClients[socket]);
