@@ -22,6 +22,7 @@ void	Server::_part(int socket, std::vector<std::string>& arg) {
 	msg += buffer + "\r\n";
 	this->_channels[arg[0]].delUserFromChannel(this->_mapSocketAndClients[socket].getNickname());
 	this->_mapSocketAndClients[socket].delActiveChannel(arg[0]);
+	this->_mapSocketAndClients[socket].sendMessage(msg);
 	if (this->_channels[arg[0]].getNbrOfClient()) {
 		this->_channels[arg[0]].broadcast(msg, this->_mapSocketAndClients[socket]);
 	} else {

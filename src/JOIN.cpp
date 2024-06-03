@@ -27,9 +27,10 @@ bool	Server::_isValidChannel(std::string channelName) const {
 }
 
 void	Server::_join(int socket, std::vector<std::string>& arg) {
-	if (!this->_mapSocketAndClients[socket].getIsRegistered())
+	if (!this->_mapSocketAndClients[socket].getIsRegistered()) {
 		this->_mapSocketAndClients[socket].sendMessage(ERR_NOTREGISTERED("User not registered"));
 		return ;
+	}
 	if (arg.size() < 1)
 		return (this->_mapSocketAndClients[socket].sendMessage(ERR_NEEDMOREPARAMS(this->_mapSocketAndClients[socket].getNickname(), "JOIN")));
 
