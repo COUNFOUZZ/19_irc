@@ -13,6 +13,7 @@
 #define ERR_USERNOTINCHANNEL(nickname, channel, userTarget) (std::string(":") + SERVER_NAME + " 441 " + nickname + " " + channel + " :" + userTarget + " are not on that channel\r\n")
 #define ERR_NOTONCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 442 " + nickname + " " + channel + " :You are not on that channel\r\n")
 #define ERR_USERONCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 443 " + nickname + " " + channel + " :User is already on the channel.\r\n")
+#define ERR_NOTREGISTERED(reason) (std::string("451 :") + reason + "\r\n")
 #define ERR_NEEDMOREPARAMS(nickname, command) (std::string(":") + SERVER_NAME + " 461 " + nickname + " " + command + " :Not enough parameters\r\n")
 #define ERR_ALREADYREGISTERED(reason) (std::string("462 :") + reason + "\r\n")
 #define ERR_PASSWDMISMATCH(nickname) (std::string(":") + SERVER_NAME + " 464 " + nickname + SERVER_NAME + " :Password incorrect\r\n")
